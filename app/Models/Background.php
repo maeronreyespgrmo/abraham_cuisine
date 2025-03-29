@@ -1,0 +1,14 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Background extends Model
+{
+    //
+    protected $fillable = [
+        'image',
+    ];
+    protected $table = 'tbl_backgrounds'; 
+}
