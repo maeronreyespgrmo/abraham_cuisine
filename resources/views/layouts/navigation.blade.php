@@ -26,6 +26,7 @@
                     <x-nav-link :href="route('product')" :active="request()->routeIs('products')">
                         {{ __('Products') }}
                     </x-nav-link>
+                    
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('backgrounds')" :active="request()->routeIs('backgrounds')">
@@ -56,6 +57,18 @@
                     <x-slot name="content">
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Profile') }}
+                        </x-dropdown-link>
+
+                        <x-dropdown-link :href="route('feedbacks')">
+                            {{ __('Feedbacks') }}
+                        </x-dropdown-link>
+  
+                        <x-dropdown-link :href="route('product')">
+                            {{ __('Products') }}
+                        </x-dropdown-link>
+
+                        <x-dropdown-link :href="route('backgrounds')">
+                            {{ __('Backgrounds') }}
                         </x-dropdown-link>
 
                         <!-- Authentication -->
@@ -106,6 +119,16 @@
             <div class="mt-3 space-y-1">
                 <x-responsive-nav-link :href="route('profile.edit')">
                     {{ __('Profile') }}
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link :href="route('feedbacks')">
+                    {{ __('Feedbacks') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('product')">
+                    {{ __('Products') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('backgrounds')">
+                    {{ __('Backgrounds') }}
                 </x-responsive-nav-link>
 
                 <!-- Authentication -->

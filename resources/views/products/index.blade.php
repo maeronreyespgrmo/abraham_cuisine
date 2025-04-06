@@ -36,36 +36,40 @@
             <br>
             <div class="row">
                 <div class="col-md-12">
-                    <table id="users-table" class="table table-bordered table-striped display" border=1>
-                        <thead class="table-dark">
-                            <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Description</th>
-                                <th>Price</th>
-                                <th>Image Name</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($products as $product_items)
-                            <tr>
-                                <td>{{$product_items->id}}</td>
-                            <td>{{$product_items->name}}</td>
-                            <td>{{$product_items->description}}</td>
-                            <td>{{$product_items->price}}</td>
-                            <td>{{$product_items->image_name}}</td>
-                            <td>
-                                <a href="/product/{{$product_items->id}}/edit" class="btn btn-warning">Edit</a>
-                                <a href="/product/{{$product_items->id}}/destroy" class="btn btn-danger">Delete</a>
-                            </td>
-
-                            </tr>
-                            
-                            @endforeach
-                            
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table id="users-table" class="table table-bordered table-striped display nowrap" border="1">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Price</th>
+                                    <th>Pax</th>
+                                    <th>Type</th>
+                                    <th>Image Name</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($products as $product_items)
+                                <tr>
+                                    <td>{{$product_items->id}}</td>
+                                    <td>{{$product_items->name}}</td>
+                                    <td>{{$product_items->description}}</td>
+                                    <td>{{$product_items->price}}</td>
+                                    <td>{{$product_items->pax}}</td>
+                                    <td>{{$product_items->product_type}}</td>
+                                    <td>{{$product_items->image_name}}</td>
+                                    <td>
+                                        <a href="/product/{{$product_items->id}}/edit" class="btn btn-warning">Edit</a>
+                                        <a href="/product/{{$product_items->id}}/destroy" class="btn btn-danger">Delete</a>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    
                 </div>
                 <div class="col-md-4">
                     <center>
@@ -76,6 +80,8 @@
         </div>
     </div>
     <script>
-        $('#users-table').DataTable();
+        $('#users-table').DataTable({
+            responsive: true
+        });
     </script>
 </x-app-layout>

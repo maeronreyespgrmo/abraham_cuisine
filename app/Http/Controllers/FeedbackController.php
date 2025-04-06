@@ -34,7 +34,7 @@ class FeedbackController extends Controller
 
    public function store(Request $request)
    {
-    
+    // return$this->analyzeSentiment($request->other_comments);
     $this->validate($request, [
         'q1' => 'required',
         'q2' => 'required',
@@ -78,6 +78,68 @@ class FeedbackController extends Controller
 
    }
 
+   
+   public function edit($id)
+   {
+     $feedbacks = Feedback::where('id','=',$id)->first();
+     $feedback_scores = FeedbackScore::where('id','=',$id)->first();
+     return view('feedback.edit',compact('feedbacks','feedback_scores'));
+   }
+
+   public function update($id,Request $request)
+   {
+    $this->validate($request, [
+        'q1' => 'required',
+        'q2' => 'required',
+        'q3' => 'required',
+        'q4' => 'required',
+        'q5' => 'required',
+        'q6' => 'required',
+        'q7' => 'required',
+        'q8' => 'required',
+        'q9' => 'required',
+        'q10' => 'required',
+    ]);
+
+    $agree = $request->has('agree') ? 'Yes' : 'No';
+    $sentiment = $this->analyzeSentiment($request->other_comments);
+
+    Feedback::where('id', $id)->update([
+        'q1' => $request->q1,
+        'q2' => $request->q2,
+        'q3' => $request->q3,
+        'q4' => $request->q4,
+        'q5' => $request->q5,
+        'q6' => $request->q6,
+        'q7' => $request->q7,
+        'q8' => $request->q8,
+        'q9' => $request->q9,
+        'q10' => $request->q10,
+        'agree' => $request->agree
+    ]);
+
+    $feedback_score = ($request->q1+$request->q2+$request->q3+$request->q4+$request->q5+$request->q6+$request->q7+$request->q8+$request->q9+$request->q10)/10; 
+    
+    FeedbackScore::where('id', $id)->update([
+        'feedback_id' => $id,
+        'score' => $feedback_score,
+        'other_comments' => $request->other_comments,
+        'sentimental' => trim($sentiment)
+    ]);
+
+    //dd(base_path('\public\scripts\sentimental.py'));
+
+    return redirect()->back()->with('success', 'Feedback submitted successfully!');
+
+   }
+
+   public function destroy($id)
+   {
+        Feedback::destroy($id);
+        FeedbackScore::destroy($id);
+        return redirect("/feedbacks/show")->withErrors('Deleted Successfull');
+   }
+
    private function analyzeSentiment($text)
     {
         $escapedText = escapeshellarg($text);
@@ -85,5 +147,11 @@ class FeedbackController extends Controller
         $pythonPath = 'python'; // Use 'python' instead of 'python3'
         $output = shell_exec("$pythonPath \"$scriptPath\" $escapedText 2>&1");
         return$output;
+        //SERVER
+        // $escapedText = escapeshellarg($text);
+        // $scriptPath = base_path('public/scripts/sentimental.py');
+        // $pythonPath = base_path('public/scripts/venv/bin/python');
+        // $output = shell_exec("$pythonPath \"$scriptPath\" $escapedText 2>&1");
+        // return $output;
     }
 }

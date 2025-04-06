@@ -30,8 +30,6 @@
 
 <link rel="stylesheet" href="{{ asset('css/food_menu.css') }}">
 
-
-
 <style>
 /* Enable smooth scroll */
 html {
@@ -45,23 +43,31 @@ font-family: Arial, sans-serif;
 .nav-item {
 display: block !important;
 visibility: visible !important;
-z-index:99999;
-background-color: white;
 }
-.custom-container {
-width: 90%;
-margin: 0 auto; /* centers the div */
+
+.carousel-item img {
+width: 500px;
+height: 450px;
+object-fit: cover;
+border-radius: 50%;
+cursor: pointer;
+}
+
+.move-right-padding {
+padding-left: 100px; /* Adjust this value to move it further to the right */
 }
 </style>
+
+
 </head>
 
 <body>
 <header class="main_menu home_menu">
-<div class="container custom-container">
+<div class="container">
 <div class="row align-items-center">
 <div class="col-lg-12">
 <nav class="navbar navbar-expand-lg navbar-light">
-<a class="navbar-brand" href="https://srv766420.hstgr.cloud"> <img class="" src="img/logo.png" alt="logo" height="70" width="250"> </a>
+<a class="navbar-brand" href="https://abraham-cuisine.test"> <img class="" src="img/logo.png" alt="logo" height="70" width="250"> </a>
 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 <span class="navbar-toggler-icon"></span>
 </button>
@@ -69,7 +75,7 @@ margin: 0 auto; /* centers the div */
 <div class="collapse navbar-collapse main-menu-item justify-content-end" id="navbarSupportedContent">
 <ul class="navbar-nav">
 <li class="nav-item">
-<a class="nav-link" href="#">Home</a>
+<a class="nav-link" href="#">Dashboard</a>
 </li>
 <li class="nav-item">
 <a class="nav-link" href="#about-page">About</a>
@@ -108,7 +114,7 @@ margin: 0 auto; /* centers the div */
 
 <!-- Banner Part Start -->
 <section class="banner_part">
-<div class="container custom-container">
+<div class="container">
 <div class="row align-items-center">
 <!-- Text Section -->
 <div class="col-lg-6">
@@ -156,44 +162,14 @@ Reservation
 </div>
 </section>
 <!-- Banner Part End -->
-
-<!-- Add CSS for Circular Images -->
-<style>
-.carousel-item img {
-width: 500px;
-height: 450px;
-object-fit: cover;
-border-radius: 50%;
-cursor: pointer;
-}
-
-</style>
-
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-let myCarousel = new bootstrap.Carousel(document.querySelector("#foodCarousel"), {
-interval: 3000, // Auto-slide every 3 seconds
-ride: "carousel"
-});
-
-document.querySelectorAll(".carousel-img").forEach(img => {
-img.addEventListener("click", function () {
-myCarousel.next(); // Move to the next slide on image click
-});
-});
-});
-</script>
-
 <!-- Add Bootstrap JS (if not already included in your layout) -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
-
 
 
 
 
 <!--::exclusive_item_part start::-->
 <section class="exclusive_item_part blog_item_section">
-<div class="container custom-container">
+<div class="container">
 <div class="row">
 <div class="col-xl-5">
 <div class="section_tittle">
@@ -204,15 +180,15 @@ myCarousel.next(); // Move to the next slide on image click
 </div>
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
-@foreach($exclusive as $exclusive_item)
+@foreach($products as $product_item)
 <!-- Item 1 -->
 <div class="bg-white rounded-lg shadow-md overflow-hidden">
 <div class="h-64 bg-gray-100 flex items-center justify-center">
-<img src="uploads/products/{{$exclusive_item->image_name}}" alt="INIHAW FIESTA" class="h-full w-auto object-contain">
+<img src="uploads/products/{{$product_item->image_name}}" alt="INIHAW FIESTA" class="h-full w-auto object-contain">
 </div>
 <div class="p-6 text-center">
-<h3 class="text-lg font-bold text-gray-800">{{$exclusive_item->name}}</h3>
-<p class="text-gray-600 mt-2">{{$exclusive_item->description}}</p>
+<h3 class="text-lg font-bold text-gray-800">{{$product_item->name}}</h3>
+<p class="text-gray-600 mt-2">{{$product_item->description}}</p>
 </div>
 </div>
 @endforeach
@@ -224,7 +200,7 @@ myCarousel.next(); // Move to the next slide on image click
 
 <!-- about part start-->
 <section id="about-page" class="about_part">
-<div class="container custom-container">
+<div class="container-fluid">
 <div class="row align-items-center">
 <div class="col-sm-4 col-lg-5 offset-lg-1">
 <div class="about_img">
@@ -250,7 +226,7 @@ TARA NA at Patuloy na Tikman ang Sarap ng Pagkaing Abraham's Cuisine! SWAK PANG 
 
 <!-- about part start-->
 <section class="about_part about_bg">
-<div class="container custom-container">
+<div class="container-fluid">
 <div class="row align-items-center">
 <div class="col-sm-4 col-lg-5 offset-lg-1">
 <div class="about_img">
@@ -272,7 +248,7 @@ dining side-by-side, and sharing meals served on banana leaves.</p>
 <!-- about part end-->
 
 <section class="Fmenu_bg" id="menu-page">
-<div class="container custom-container">
+<div class="container">
 <div class="row">
 <div class="col-lg-12">
 <div class="Fmenu_iner text-center">
@@ -287,7 +263,7 @@ dining side-by-side, and sharing meals served on banana leaves.</p>
 
 <!-- food_menu start-->
 <section class="food_menu gray_bg">
-<div class="container custom-container">
+<div class="container">
 <div class="row justify-content-between">
 <div class="col-lg-5">
 <div class="section_tittle" style="margin-top: -100px;">
@@ -297,8 +273,16 @@ dining side-by-side, and sharing meals served on banana leaves.</p>
 </div>
 <div class="col-lg-6">
 <div class="nav nav-tabs food_menu_nav" id="myTab" role="tablist">
-{{-- <a class="active" id="Special-tab" data-toggle="tab" href="#Special" role="tab"
-aria-controls="Special" aria-selected="false">Special <img src="img/icon/play.svg" alt="play"></a> --}}
+<a class="active" id="Special-tab" data-toggle="tab" href="#Special" role="tab"
+aria-controls="Special" aria-selected="false">Special <img src="img/icon/play.svg" alt="play"></a>
+<a id="Breakfast-tab" data-toggle="tab" href="#Breakfast" role="tab" aria-controls="Breakfast"
+aria-selected="false">Dishes<img src="img/icon/play.svg" alt="play"></a>
+<a id="Launch-tab" data-toggle="tab" href="#Launch" role="tab" aria-controls="Launch"
+aria-selected="false">Value Meal<img src="img/icon/play.svg" alt="play"></a>
+<a id="Dinner-tab" data-toggle="tab" href="#Dinner" role="tab" aria-controls="Dinner"
+aria-selected="false">Delights <img src="img/icon/play.svg" alt="play"> </a>
+<a id="Dinner-tab" data-toggle="tab" href="#Sneaks" role="tab" aria-controls="Dinner"
+aria-selected="false">Take Out<img src="img/icon/play.svg" alt="play"> </a>
 </div>
 </div>
 
@@ -308,36 +292,54 @@ aria-controls="Special" aria-selected="false">Special <img src="img/icon/play.sv
 <div class="tab-pane fade show active single-member" id="Special" role="tabpanel"
 aria-labelledby="Special-tab">
 <div class="row">
-@foreach($normal as $normal_item)
+@foreach($products as $product_item)
 <div class="col-sm-6 col-lg-6">
 <div class="single_food_item media">
-<img src="{{ asset('uploads/products/'.$normal_item->image_name) }}" class="mr-3" alt="..." style="width: 250px; height: 150px;">
+<img src="{{ asset('uploads/products/'.$product_item->image_name) }}" class="mr-3" alt="..." style="width: 250px; height: 150px;">
 
 <div class="media-body align-self-center">
-    <h3>{{$normal_item->name}}</h3>
-    <p>10-12 Persons</p>
-    <h5>₱ {{$normal_item->price}}</h5>
+<h3>{{$product_item->name}}</h3>
+<p>10-12 Persons</p>
+<h5>₱ {{$product_item->price}}</h5>
 </div>
 </div>
 </div>
 
 @endforeach
-                
+
 </div>
 </div>
 
+<!--Dishes-->
+<div class="tab-pane fade single-member" id="Breakfast" role="tabpanel"
+aria-labelledby="Breakfast-tab">
+<div class="row">
+@foreach($products as $product_item)
+<div class="col-sm-6 col-lg-6">
+<div class="single_food_item media">
+<img src="{{ asset('uploads/products/'.$product_item->image_name) }}" class="mr-3" alt="..." style="width: 250px; height: 150px;">
+<div class="media-body align-self-center">
+<h3>{{$product_item->name}}</h3>
+<h5>₱ {{$product_item->price}}</h5>
+</div>
+</div>
+</div>
+@endforeach
+
+</div>
+</div>
 
 <!--Value Meal-->
 <div class="tab-pane fade single-member" id="Launch" role="tabpanel"
 aria-labelledby="Launch-tab">
 <div class="row">
-@foreach($normal as $normal_item)
+@foreach($products as $product_item)
 <div class="col-sm-6 col-lg-6">
 <div class="single_food_item media">
-<img src="{{ asset('uploads/products/'.$normal_item->image_name) }}" class="mr-3" alt="..." style="width: 250px; height: 150px;">
+<img src="{{ asset('uploads/products/'.$product_item->image_name) }}" class="mr-3" alt="..." style="width: 250px; height: 150px;">
 <div class="media-body align-self-center">
-    <h3>{{$normal_item->name}}</h3>
-    <h5>₱ {{$normal_item->price}}</h5>
+<h3>{{$product_item->name}}</h3>
+<h5>₱ {{$product_item->price}}</h5>
 </div>
 </div>
 </div>
@@ -346,6 +348,139 @@ aria-labelledby="Launch-tab">
 </div>
 </div>
 
+<!--Delights-->
+<div class="tab-pane fade single-member" id="Dinner" role="tabpanel"
+aria-labelledby="Dinner-tab">
+<div class="row">
+@foreach($products as $product_item)
+<div class="col-sm-6 col-lg-6">
+<div class="single_food_item media">
+<img src="{{ asset('uploads/products/'.$product_item->image_name) }}" class="mr-3" alt="..." style="width: 250px; height: 150px;">
+<div class="media-body align-self-center">
+<h3>{{$product_item->name}}</h3>
+<h5>₱ {{$product_item->price}}</h5>
+</div>
+</div>
+</div>
+@endforeach
+</div>
+</div>
+
+<!--Take Out-->
+{{-- <div class="tab-pane fade single-member" id="Sneaks" role="tabpanel"
+aria-labelledby="Sneaks-tab">
+<div class="row">
+<div class="col-sm-6 col-lg-6">
+<div class="single_food_item media">
+<img src="">
+<div class="media-body align-self-center">
+<h3>BILAO SPECIAL</h3>
+<p>Choices of Pansit - Choice of Pancit Canton, Bihon,</br> Canton Bihon, Sotanghon Guisado, and Habsisig.</p>
+<p>10 pcs. LUMPIANG SHANGHAI</p>
+<p>10 pcs. BARBEQUE</p>
+<h5>₱ 875.00/₱ 905.00</h5>
+</div>
+</div>
+<div class="single_food_item media">
+<img src="">
+<div class="media-body align-self-center">
+<h3>PANCIT BILAO</h3>
+<p>PARTY SIZE (Good for 18-23 Persons)</p>
+<h3><h5>CANTON BIHON - ₱ 1,375.00</h5></h3>
+<h3><h5>SOTANGHON GUISADO - ₱ 1,460.00</h5></h3>
+<h3><h5>HABSISIG - ₱ 1,550.00</h5></h3>
+</div>
+</div>
+<div class="single_food_item media">
+<img src="" >
+<div class="media-body align-self-center">
+<h3>PANCIT BILAO</h3>
+<p>PARTY SIZE (Good for 18-22 Persons)</p>
+<h3><h5>CARBONARA - ₱ 1,510.00</h5></h3>
+<h3><h5>SPAGHETTI - ₱ 1,510.00</h5></h3>
+</div>
+</div>
+<div class="single_food_item media">
+<img src="" >
+<div class="media-body align-self-center">
+<h3>PARTY TRAYS (FOR TAKE OUT ONLY)</h3>
+<p>BABOY (PORK)</p>
+<h3><h5>BEEF KALDERETA - ₱ 1,500.00</h5></h3>
+<h3><h5>BEEF MORCON - ₱ 1,500.00</h5></h3>
+</div>
+</div>
+<div class="single_food_item media">
+<img src="" >
+<div class="media-body align-self-center">
+<h3>PARTY TRAYS (FOR TAKE OUT ONLY)</h3>
+<p>ISDA (FISH)</p>
+<h3><h5>FISH FILLET - ₱ 950.00</h5></h3>
+<p>Choices of Sauce:</p>
+<p>
+✅Lemon Butter Sauce
+✅Sweet and Sour Sauce
+✅Tartar Sauce
+</p>
+</div>
+</div>
+<div class="single_food_item media">
+<img src="" >
+<div class="media-body align-self-center">
+<h3>PARTY TRAYS (FOR TAKE OUT ONLY)</h3>
+<p>MANOK (CHICKEN)</p>
+<h3><h5>CHICKEN LOLLIPOP - ₱ 900.00</h5></h3>
+<h3><h5>FRIED CHICKEN - ₱ 1,100.00</h5></h3>
+<h3><h5>CHICKEN CORDON BLEU - ₱ 1,300.00</h5></h3>
+</div>
+</div>
+</div>
+<!--Middle Part-->
+<div class="col-sm-6 col-lg-6">
+<div class="single_food_item media">
+<img src="" >
+<div class="media-body align-self-center">
+<h3>PANCIT BILAO</h3>
+<p>FAMILY SIZE (Good for 7-10 Persons)</p>
+<h3><h5>CANTON BIHON - ₱ 710.00</h5></h3>
+<h3><h5>SOTANGHON GUISADO - ₱ 755.00</h5></h3>
+<h3><h5>HABSISIG - ₱ 800.00</h5></h3>
+</div>
+</div>
+<div class="single_food_item media">
+<img src="" >
+<div class="media-body align-self-center">
+<h3>MIRIENDA BILAO</h3>
+<p>FAMILY SIZE (Good for 8-15 Persons)</p>
+<h3><h5>CARBONARA - ₱ 750.00</h5></h3>
+<h3><h5>SPAGHETTI - ₱ 750.00</h5></h3>
+</div>
+</div>
+<div class="single_food_item media">
+<img src="" >
+<div class="media-body align-self-center">
+<h3>PARTY TRAYS (FOR TAKE OUT ONLY)</h3>
+<p>BABOY (PORK)</p>
+<h3><h5>PORK MENUDO - ₱ 1,300.00</h5></h3>
+<h3><h5>TOKWA'T BABOY  - ₱ 1,300.00</h5></h3>
+<h3><h5>GRILLED PORK IN GRAVY </br>MUSHROOM SAUCE - ₱ 1,300.00</h5></h3>
+<h3><h5>CRISPY KARE-KARE  - ₱ 1,300.00</h5></h3>
+<h3><h5>PORK CORDON BLEU  - ₱ 1,300.00</h5></h3>
+</div>
+</div>
+<div class="single_food_item media">
+<img src="" >
+<div class="media-body align-self-center">
+<h3>PARTY TRAYS (FOR TAKE OUT ONLY)</h3>
+<p>GULAY (VEGETABLES)</p>
+<h3><h5>CHOPSUEY - ₱ 850.00</h5></h3>
+<h3><h5>PAKBET  - ₱ 1,100.00</h5></h3>
+<h3><h5>CREAMY VEGETABLES </br>W/ QUIAL EGGS- ₱ 850.00</h5></h3>
+<h3><h5>FRESH LUMPIA (min. 30 pcs.)  - ₱ 1,200.00</h5></h3>
+</div>
+</div>
+</div>
+</div>
+</div> --}}
 </div>
 </div>
 </div>
@@ -356,7 +491,7 @@ aria-labelledby="Launch-tab">
 <!--::reservation_part start::-->
 {{-- reservation --}}
 
-<div id="reservation-page" class="container custom-container mx-auto p-6">
+<div id="reservation-page" class="container mx-auto p-6">
 <h2 class="text-2xl font-semibold mb-6">Create a Reservation</h2>
 
 <!-- Display success message -->
@@ -480,21 +615,12 @@ Create Reservation
 </div>
 </div>
 </form>
-<script>
-// Disable past dates for datetime-local input
-document.addEventListener("DOMContentLoaded", function () {
-const scheduleInput = document.getElementById("schedule");
-const now = new Date();
-const formattedDate = now.toISOString().slice(0, 16); // Format date to YYYY-MM-DDTHH:MM
-scheduleInput.setAttribute("min", formattedDate); // Set the minimum date to the current date and time
-});
-</script>
 </div>
 <!--::reservation_part end::-->
 
 <!-- intro_video_bg start-->
 <section class="intro_video_bg">
-<div class="container custom-container">
+<div class="container">
 <div class="row">
 <div class="col-lg-12">
 <div class="intro_video_iner text-center">
@@ -514,12 +640,12 @@ href="./img/Celebrate 1.mp4">
 
 <!-- footer part start-->
 <footer class="footer-area" id="contact-page" style="background-color: rgb(254, 254, 250);">
-<div class="container custom-container">
+<div class="container">
 <div class="row">
 <div class="col-xl-3 col-sm-6 col-md-4" style="padding-right: 20px;">
 <div class="single-footer-widget footer_1">
 <h4>Find Us</h4>
-<div class="container">
+<div style="margin-top: -15px; margin-left: -80px; margin-right: 60px;">
 <iframe 
 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3499.214766955787!2d121.4395333745673!3d14.267319585150524!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397fcca70bd218b%3A0xe468b6dc678e87a0!2sAbraham&#39;s%20Cuisine%20and%20Catering%20Services!5e1!3m2!1sen!2sph!4v1735942241225!5m2!1sen!2sph" 
 width="100%" 
@@ -564,11 +690,11 @@ referrerpolicy="no-referrer-when-downgrade">
 <div class="form-group">
 <div class="input-group mb-3">
 <input type="email" id="emailInput" class="form-control" placeholder="Email Address"
-    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email Address'" required>
+onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email Address'" required>
 <div class="input-group-append">
-    <button class="btn" type="button" onclick="submitEmail()">
-        <i class="fas fa-paper-plane"></i>
-    </button>
+<button class="btn" type="button" onclick="submitEmail()">
+<i class="fas fa-paper-plane"></i>
+</button>
 </div>
 </div>
 </div>
@@ -577,25 +703,7 @@ referrerpolicy="no-referrer-when-downgrade">
 <!-- Confirmation Message -->
 <p id="confirmationMessage" style="display: none; color: green; margin-right: -50px; margin-top: -10px;">Thank you! Your email has been submitted.</p>
 
-<script>
-function submitEmail() {
-// Get the email address from the input field
-const emailInput = document.getElementById('emailInput');
-const confirmationMessage = document.getElementById('confirmationMessage');
 
-// Simple validation
-if (emailInput.value === '') {
-alert("Please enter a valid email address.");
-return;
-}
-
-// Show confirmation message
-confirmationMessage.style.display = 'block';
-
-// Clear the input field
-emailInput.value = '';
-}
-</script>
 </div>
 </div>
 </div>
@@ -604,7 +712,6 @@ emailInput.value = '';
 <p style="background-color: #fff; margin-top: 20px; margin-bottom: -30px; text-align: center;">&copy; 2024 ABRAHAM'S CUISINE. All rights reserved.</p>
 
 <!-- footer part end-->
-
 
 <script src="js/jquery-1.12.1.min.js"></script>
 <script src="js/popper.min.js"></script>
@@ -617,6 +724,7 @@ emailInput.value = '';
 <script src="js/gijgo.min.js"></script>
 <script src="js/jquery.nice-select.min.js"></script>
 <script src="js/custom.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 // Disable past dates for datetime-local input
 document.addEventListener("DOMContentLoaded", function () {

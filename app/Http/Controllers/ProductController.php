@@ -22,10 +22,12 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
+        // return$request->type;
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
             'price' => 'required',
+            'type' => 'required',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif',
         ]);
 
@@ -39,6 +41,8 @@ class ProductController extends Controller
             'name' => $request->name,
             'description' => $request->description,
             'price' => $request->price,
+            'product_type' => $request->type,
+            'pax' => $request->pax,
             'image_name' => $imageName,
         ]);
 
@@ -50,6 +54,7 @@ class ProductController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
+            'type' => 'required|string',
             'price' => 'required',
         ]);
 
@@ -66,7 +71,9 @@ class ProductController extends Controller
         Product::where('id', $id)->update([
             'name' => $request->name,
             'description' => $request->description,
+            'product_type' => $request->type,
             'price' => $request->price,
+            'pax' => $request->pax,
             'image_name' => $imageName,
         ]);
 

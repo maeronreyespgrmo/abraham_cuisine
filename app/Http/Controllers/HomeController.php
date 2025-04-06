@@ -15,8 +15,9 @@ class HomeController extends Controller
     public function index(Request $request)
     {   
         $background = Background::all();
-        $products = Product::all();
-        return view('welcome',compact('products','background'));
+        $exclusive = Product::where('product_type', 'Exclusive')->get();
+        $normal = Product::where('product_type', 'Special')->limit(10)->get();
+        return view('welcome',compact('exclusive','normal','background'));
     }
     public function test(Request $request)
     {   

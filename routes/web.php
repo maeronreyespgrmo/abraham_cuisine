@@ -19,6 +19,9 @@ Route::get('/test', [HomeController::class, 'test']);
 Route::get('/feedbacks', [FeedbackController::class, 'create']);
 Route::post('/feedbacks/store', [FeedbackController::class, 'store']);
 Route::get('/feedbacks/show', [FeedbackController::class, 'show'])->name('feedbacks');
+Route::get('/feedbacks/{id}/edit', [FeedbackController::class, 'edit']);
+Route::post('/feedbacks/{id}/update', [FeedbackController::class, 'update']);
+Route::get('/feedbacks/{id}/destroy', [FeedbackController::class, 'destroy']);
 
 Route::get('/dashboard', function () {
     // Retrieve all reservations

@@ -45,7 +45,20 @@
                             <label for="name" class="form-label">Price</label>
                             <input type="number" class="form-control" id="name" name="price" required>
                         </div>
-                    
+
+                        <div class="mb-3">
+                        <label for="name" class="form-label">Product Type</label>
+                        <select name="type">  
+                            <option value="Exclusive">Exclusive</option>
+                            <option value="Special">Special</option>
+                        </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Pax</label>
+                            <input type="text" class="form-control" id="pax" name="pax" required>
+                        </div>
+
                         <!-- Image Upload Field -->
                         <div class="mb-3">
                             <label for="image" class="form-label">Image Name</label>

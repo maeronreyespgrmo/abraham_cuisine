@@ -36,7 +36,7 @@
             <br>
             <div class="row">
                 <div class="col-md-12">
-                    <table id="users-table" class="table table-bordered table-striped display" border=1>
+                    <table id="users-table" class="table table-bordered table-striped display">
                         <thead class="table-dark">
                             <tr>
                                 <th>ID</th>
@@ -47,26 +47,24 @@
                         <tbody>
                             @foreach($products as $product_items)
                             <tr>
-                            <td>{{$product_items->id}}</td>
-                            <td>{{$product_items->image}}</td>
-                            <td>
-                                <a href="/backgrounds/{{$product_items->id}}/edit" class="btn btn-warning">Edit</a>
-                                <a href="/backgrounds/{{$product_items->id}}/destroy" class="btn btn-danger">Delete</a>
-                            </td>
-
+                                <td>{{$product_items->id}}</td>
+                                <td>{{$product_items->image}}</td>
+                                <td>
+                                    <a href="/backgrounds/{{$product_items->id}}/edit" class="btn btn-warning">Edit</a>
+                                    <a href="/backgrounds/{{$product_items->id}}/destroy" class="btn btn-danger">Delete</a>
+                                </td>
                             </tr>
-                            
                             @endforeach
-                            
                         </tbody>
                     </table>
                 </div>
-                <div class="col-md-4">
-                    <center>
-                        <canvas id="myPieChart"></canvas> 
-                    </center>
+                <div class="col-md-4 col-12">
+                    <div class="chart-container">
+                        <canvas id="myPieChart"></canvas>
+                    </div>
                 </div>
             </div>
+            
         </div>
     </div>
     <script>
