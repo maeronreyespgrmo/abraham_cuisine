@@ -7,13 +7,30 @@ use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\BackgroundController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\NotificationController;
 use App\Models\Reservation;
+use App\Events\Notifications;
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/message-sent', function () {
+        // Sending a simple object instead of a model
+        $message = [
+            'user' => 'John Doe',
+            'text' => 'Hello from Laravel Reverb!',
+            'timestamp' => now()->toDateTimeString(),
+        ];
+    
+        // Fire the event
+        broadcast(new Notifications('weadadad'));
+    
+        return response()->json(['status' => 'Message broadcasted!']);
+});
 
-Route::get('/', [HomeController::class, 'index']);
+Route::get('/hihi', function () {
+    return view('test');
+});
+
+
+Route::get('/', [HomeController::class, 'index'])->name('welcome');
 Route::get('/test', [HomeController::class, 'test']);
 
 Route::get('/feedbacks', [FeedbackController::class, 'create']);
@@ -25,7 +42,7 @@ Route::get('/feedbacks/{id}/destroy', [FeedbackController::class, 'destroy']);
 
 Route::get('/dashboard', function () {
     // Retrieve all reservations
-    $reservations = Reservation::all();
+    $reservations = Reservation::orderBy('id', 'DESC')->get();
 
     // Pass data to the view
     return view('dashboard', compact('reservations'));
@@ -51,6 +68,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/backgrounds/{id}/update', [BackgroundController::class, 'update'])->name('backgrounds.update');
     Route::get('/backgrounds/{id}/destroy', [BackgroundController::class, 'destroy'])->name('backgrounds.destroy');
     Route::get('/backgrounds/{id}/upload_destroy', [BackgroundController::class, 'upload_destroy']);
+
+    //NOTIFICATIONS
+    Route::get('/notifications', [NotificationController::class, 'index']);
+    Route::get('/notifications/data', [NotificationController::class, 'index_data'])->name('notifications.data');
     
 });
 
@@ -58,7 +79,7 @@ Route::prefix('reservations')->group(function () {
     Route::get('/', [ReservationController::class, 'index']); // Show all reservations 
     Route::get('/create', [ReservationController::class, 'create'])->name('reservations.create');    
     // Store reservation (this is the one causing the error)
-    Route::post('/', [ReservationController::class, 'store'])->name('reservations.store');
+    Route::post('/reservations/store', [ReservationController::class, 'store'])->name('reservations.store');
     Route::get('/reservations/{id}', [ReservationController::class, 'show'])->name('reservations.show');
     Route::put('/reservations/{id}', [ReservationController::class, 'update'])->name('reservations.update');
     Route::get('{id}/edit', [ReservationController::class, 'edit']); // Show edit form

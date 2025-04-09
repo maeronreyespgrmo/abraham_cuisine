@@ -22,6 +22,7 @@ class ReservationFactory extends Factory
             'email' => $this->faker->email,
             'address' => $this->faker->address,
             'table' => $this->faker->numberBetween(1, 10), // Using integer IDs for tables
+            'pax' => $this->faker->numberBetween(1, 10),
             'schedule' => $this->faker->dateTimeBetween('+1 days', '+1 week'),
             'status' => $this->faker->randomElement(['pending', 'confirmed', 'cancelled']),
         ];

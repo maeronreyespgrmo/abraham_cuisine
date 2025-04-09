@@ -7,13 +7,18 @@
 
     <div class="container mx-auto px-4 py-8">
         <h1 class="text-3xl font-semibold text-gray-800 mb-6">Reservations</h1>
-
+      
         <!-- Filter Section -->
         <div class="mb-4">
             <label for="filter" class="block text-sm font-medium text-gray-700">Filter by Full Name:</label>
             <input type="text" id="filter" oninput="filterTable()"
                 class="mt-1 px-4 py-2 border border-gray-300 rounded-md">
         </div>
+
+        {{-- <a href="{{ route('reservations.create') }}"
+        class="inline-block bg-blue-500 text-white px-4 py-1 rounded-md hover:bg-blue-600 transition duration-200">
+        Create New
+        </a> --}}
 
         <div class="overflow-x-auto">
             <table id="reservationsTable" class="min-w-full bg-white border border-gray-200 rounded-lg shadow-lg">
@@ -24,8 +29,9 @@
                         <th class="py-3 px-6 text-left" onclick="sortTable(2)">Email</th>
                         <th class="py-3 px-6 text-left" onclick="sortTable(3)">Address</th>
                         <th class="py-3 px-6 text-left" onclick="sortTable(4)">Table</th>
-                        <th class="py-3 px-6 text-left" onclick="sortTable(5)">Schedule</th>
-                        <th class="py-3 px-6 text-left" onclick="sortTable(6)">Status</th>
+                        <th class="py-3 px-6 text-left" onclick="sortTable(5)">Pax</th>
+                        <th class="py-3 px-6 text-left" onclick="sortTable(6)">Schedule</th>
+                        <th class="py-3 px-6 text-left" onclick="sortTable(7)">Status</th>
                         <th class="py-3 px-6 text-center">Actions</th>
                     </tr>
                 </thead>
@@ -37,6 +43,7 @@
                             <td class="py-3 px-6 text-left">{{ $reservation->email }}</td>
                             <td class="py-3 px-6 text-left">{{ $reservation->address }}</td>
                             <td class="py-3 px-6 text-left">{{ $reservation->table }}</td>
+                            <td class="py-3 px-6 text-left">{{ $reservation->pax }}</td>
                             <td class="py-3 px-6 text-left">{{ $reservation->schedule }}</td>
                             <td class="py-3 px-6 text-left">
                                 <span

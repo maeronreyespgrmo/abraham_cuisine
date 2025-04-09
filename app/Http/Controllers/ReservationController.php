@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Reservation;
 use App\Models\ReservationList;
 use App\Models\Table;
+use App\Models\Notification;
+use App\Events\Notifications;
 
 class ReservationController extends Controller
 {
@@ -30,32 +32,57 @@ class ReservationController extends Controller
     // Store a newly created reservation in the database
     public function store(Request $request)
     {
-        // Validate the incoming data
-        $validated = $request->validate([
-            'fullname' => 'required|string|max:255',
-            'contact' => 'required|string|max:255',
-            'email' => 'required|email',
-            'address' => 'required|string',
-            'table' => 'required|string|max:255',
-            'schedule' => 'required|date',
-            // Status is no longer in the request; we will set it manually
-        ]);
 
-        // Add the status manually (set to "pending")
-        $validated['status'] = 'pending';
-
-        // Create the reservation and store it in the database
-        Reservation::create($validated);
+        try {
+            // Validate the incoming data
+            $validated = $request->validate([
+                'fullname' => 'required|string|max:255',
+                'contact' => 'required|string|max:255',
+                'email' => 'required|email',
+                'address' => 'required|string',
+                'table' => 'required|string|max:255',
+                'pax' => 'required|string|max:255',
+                'schedule' => 'required|date',
+                // Status is no longer in the request; we will set it manually
+            ]);
+        
+            // Add the status manually (set to "pending")
+            $validated['status'] = 'pending';
+        
+            // Create the reservation and store it in the database
+            Reservation::create($validated);    
+        
+            Notification::create([
+                'name' => $request->fullname,
+                'description' => "have reserved",
+                'date' => $request->schedule,
+                'status' => 'Create',
+            ]);
+        
+            broadcast(new Notifications('weadadad'));
+        // return"we"; 
+             return redirect()->route('welcome')->with('success', 'Reservation created successfully!');
+        
+        } catch (\Exception $e) {
+            // You can customize this response as needed
+            return response()->json([
+                'success' => false,
+                'message' => 'Something went wrong.',
+                'error' => $e->getMessage(),
+            ], 500);
+            return redirect()->route('welcome')->withErrors($e->getMessage());
+        }
+        
 
         // Redirect or return success message
-        return redirect()->route('reservations.create')->with('success', 'Reservation created successfully!');
+        // return redirect()->route('welcome')->with('success', 'Reservation created successfully!');
     }
 
    public function show($id)
 {
     $reservation = Reservation::findOrFail($id);
     $tables = Table::all(); // Fetch all available tables
-
+    // return$reservation;
     return view('reservations.show', compact('reservation', 'tables'));
 }
 
@@ -75,7 +102,7 @@ class ReservationController extends Controller
    }
 
    public function update(Request $request, $id)
-{
+   {
     $reservation = Reservation::findOrFail($id);
 
     // Validate the form input
@@ -85,13 +112,22 @@ class ReservationController extends Controller
         'email' => 'required|email',
         'address' => 'required|string',
         'table' => 'required|string|max:255',
-        
+        'pax' => 'required|string|max:255',
         'schedule' => 'required|date|date_format:Y-m-d\TH:i', // Ensure correct datetime format
         'status' => 'required|string|in:pending,confirmed,cancelled',
     ]);
 
     // Update reservation details
     $reservation->update($validated);
+
+    Notification::create([
+        'name' => $request->fullname,
+        'description' => "have change reservervation",
+        'date' => $request->schedule,
+        'status' => 'Update',
+    ]);
+
+    broadcast(new Notifications('weadadad'));
 
     // Redirect back with a success message
     return redirect()->route('reservations.show', $id)->with('success', 'Reservation updated successfully!');
@@ -102,6 +138,8 @@ class ReservationController extends Controller
    public function destroy($id)
    {
        $reservation = Reservation::find($id);
+
+       broadcast(new Notifications('weadadad'));
 
        if (!$reservation) {
            return response()->json(['error' => 'Reservation not found'], 404);

@@ -20,6 +20,7 @@ class Reservation extends Model
         'address',
         'table',
         'schedule',
+        'pax',
         'status',
     ];
 

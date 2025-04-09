@@ -11,6 +11,7 @@
                 {{ session('success') }}
             </div>
         @endif
+        
 
         <div class="bg-white shadow-md rounded-lg p-6">
             <form action="{{ route('reservations.update', $reservation->id) }}" method="POST">
@@ -41,17 +42,23 @@
                             class="w-full px-4 py-2 border rounded-md">
                     </div>
 
-                    <select name="table" class="w-full px-4 py-2 border rounded-md">
-                        @foreach ($tables as $table)
-                            <option value="{{ $table->table_name }}"
-                                {{ old('table', $reservation->table) == $table->table_name ? 'selected' : '' }}>
-                                {{ $table->table_name }}
-                            </option>
-                        @endforeach
-                    </select>
-
-
-
+                    <div>
+                        <label class="block font-semibold">Pax</label>
+                        <input type="text" name="pax" value="{{ old('pax', $reservation->pax) }}"
+                            class="w-full px-4 py-2 border rounded-md">
+                    </div>
+                    <div>
+                        <label class="block font-semibold">Table</label>
+                        <select name="table" class="w-full px-4 py-2 border rounded-md">
+                            @foreach ($tables as $table)
+                                <option value="{{ $table->table_name }}"
+                                    {{ old('table', $reservation->table) == $table->table_name ? 'selected' : '' }}>
+                                    {{ $table->table_name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                
                     <input type="datetime-local" id="schedule" name="schedule"
                         class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                         value="{{ old('schedule', $reservation->schedule ? $reservation->schedule->format('Y-m-d\TH:i') : '') }}"

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('email');
             $table->text('address');
             $table->string('table');  // No foreign key, just a string or integer for table identifier
+            $table->string('pax')->nullable();
             $table->timestamp('schedule');
             $table->enum('status', ['pending', 'confirmed', 'cancelled'])->default('pending');
             $table->timestamps();

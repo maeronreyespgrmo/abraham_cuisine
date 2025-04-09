@@ -367,7 +367,7 @@ aria-labelledby="Launch-tab">
 @endif
 
 <!-- Reservation Form -->
-<form action="{{ route('reservations.store') }}" method="POST">
+<form action="/reservations/store" method="POST">
 @csrf <!-- CSRF token for security -->
 
 <div class="space-y-4" id="reservation">
@@ -404,7 +404,6 @@ value="{{ old('email') }}" required>
 @enderror
 </div>
 
-<!-- Address -->
 <div>
 <label for="address" class="block text-sm font-medium text-gray-700">Address:</label>
 <input type="text" id="address" name="address"
@@ -414,6 +413,20 @@ value="{{ old('address') }}" required>
 <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
 @enderror
 </div>
+
+
+<!-- TABLE PAX -->
+<div>
+<label for="address" class="block text-sm font-medium text-gray-700">Table Per Pax:</label>
+<input type="text" id="pax" name="pax"
+class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+value="{{ old('pax') }}" required>
+@error('pax')
+<p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+@enderror
+</div>
+
+
 
 <!-- Table -->
 {{-- <div>
@@ -541,6 +554,7 @@ referrerpolicy="no-referrer-when-downgrade">
 <li><a href="https://www.facebook.com/AbramsCuisine"><img src="./img/Facebook.png" alt="FB" style="width: 30px; min-height: 30px; margin-right: 10px;"></a>FACEBOOK</li>
 <li><a href="https://www.instagram.com/abramscuisine2016/?hl=en"><img src="./img/instagram.png" alt="IG" style="width: 30px; min-height: 30px; margin-right: 10px;"></a>INSTAGRAM</li>
 <li><a href="https://mail.google.com/mail/u/0/#search/abramscuisine01%40gmail.com?compose=new"><img src="./img/email.png" alt="EMAIL" style="width: 30px; min-height: 30px; margin-right: 10px;"></a>EMAIL</li>
+<li><a href="https://mail.google.com/mail/u/0/#search/abramscuisine01%40gmail.com?compose=new"><img src="./img/qrcode.png" alt="EMAIL" style="width: 300px; min-height: 300px; margin-right: 10px;"></a>Scan me</li>
 </ul>
 </div>
 </div>
