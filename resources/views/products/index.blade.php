@@ -46,6 +46,7 @@
                                     <th>Price</th>
                                     <th>Pax</th>
                                     <th>Type</th>
+                                    <th>Preparation Time</th> 
                                     <th>Image Name</th>
                                     <th>Action</th>
                                 </tr>
@@ -59,6 +60,7 @@
                                     <td>{{$product_items->price}}</td>
                                     <td>{{$product_items->pax}}</td>
                                     <td>{{$product_items->product_type}}</td>
+                                    <td>{{$product_items->preparation_time}}</td>
                                     <td>{{$product_items->image_name}}</td>
                                     <td>
                                         <a href="/product/{{$product_items->id}}/edit" class="btn btn-warning">Edit</a>

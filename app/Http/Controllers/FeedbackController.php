@@ -20,16 +20,42 @@ class FeedbackController extends Controller
 
    public function show()
    {
-    $feedback_scores_positive = FeedbackScore::where('sentimental','=','positive')->count();
+    // $feedback_scores_positive = FeedbackScore::where('sentimental','=','positive')->count();
     $feedback_scores_negative = FeedbackScore::where('sentimental','=','negative')->count();
     $feedback_scores_neutral = FeedbackScore::where('sentimental','=','neutral')->count();
+    
+    $feedback_scores_poor = FeedbackScore::where('score','>=','1')
+                            ->where('score','<','2')
+                            ->count();
+    $feedback_scores_good = FeedbackScore::where('score','>=','2')
+                            ->where('score','<','3')
+                            ->count();
+    $feedback_scores_average = FeedbackScore::where('score','>=','3')
+                            ->where('score','<','4')
+                            ->count();
+    $feedback_scores_excellent = FeedbackScore::where('score','>=','4')
+                                ->where('score','<','5')
+                                ->count();
 
     $feedback_scores = FeedbackScore::all();
 
+    $q1 = Feedback::avg('q1');
+    $q2 = Feedback::avg('q2');
+    $q3 = Feedback::avg('q3');
+    $q4 = Feedback::avg('q4');
+    $q5 = Feedback::avg('q5');
+    $q6 = Feedback::avg('q6');
+    $q7 = Feedback::avg('q7');
+    $q8 = Feedback::avg('q8');
+    $q9 = Feedback::avg('q9');
+    $q10 = Feedback::avg('q10');
+
+    $feedback_question_average = array($q1,$q2,$q3,$q4,$q5,$q6,$q7,$q8,$q9,$q10);
+
 
     
-    $score = array($feedback_scores_negative,$feedback_scores_positive,$feedback_scores_neutral);
-      return view('feedback.show', compact('score','feedback_scores'));
+    $score = array($feedback_scores_poor,$feedback_scores_good,$feedback_scores_average,$feedback_scores_excellent);
+      return view('feedback.show', compact('score','feedback_scores','feedback_question_average'));
    }
 
    public function store(Request $request)
@@ -46,6 +72,7 @@ class FeedbackController extends Controller
         'q8' => 'required',
         'q9' => 'required',
         'q10' => 'required',
+        'other_comments' => 'required',
     ]);
 
     $agree = $request->has('agree') ? 'Yes' : 'No';
@@ -99,6 +126,7 @@ class FeedbackController extends Controller
         'q8' => 'required',
         'q9' => 'required',
         'q10' => 'required',
+        'other_comments' => 'required',
     ]);
 
     $agree = $request->has('agree') ? 'Yes' : 'No';

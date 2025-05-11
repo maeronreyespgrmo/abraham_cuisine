@@ -27,6 +27,7 @@ class ProductController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'required|string',
             'price' => 'required',
+            'preparation_time' => 'required',
             'type' => 'required',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif',
         ]);
@@ -41,6 +42,7 @@ class ProductController extends Controller
             'name' => $request->name,
             'description' => $request->description,
             'price' => $request->price,
+            'preparation_time' => $request->preparation_time,
             'product_type' => $request->type,
             'pax' => $request->pax,
             'image_name' => $imageName,
@@ -54,6 +56,7 @@ class ProductController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
+            'preparation_time' => 'required|string',
             'type' => 'required|string',
             'price' => 'required',
         ]);
@@ -71,6 +74,7 @@ class ProductController extends Controller
         Product::where('id', $id)->update([
             'name' => $request->name,
             'description' => $request->description,
+            'preparation_time' => $request->preparation_time,
             'product_type' => $request->type,
             'price' => $request->price,
             'pax' => $request->pax,

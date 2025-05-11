@@ -11,10 +11,13 @@ class Reservation extends Model
     
     protected $casts = [
         'schedule' => 'datetime',
+        'food_order'=> 'array',
     ];
-
+    
     protected $fillable = [
-        'fullname',
+        'first_name',
+        'middle_name',
+        'last_name',
         'contact',
         'email',
         'address',
@@ -22,6 +25,11 @@ class Reservation extends Model
         'schedule',
         'pax',
         'status',
+        'food_order',
+        'payment_method',
+        'town_code',
+        'province_code',
+        'barangay_code',
     ];
-
+    
 }

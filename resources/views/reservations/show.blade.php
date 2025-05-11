@@ -14,12 +14,9 @@
         
 
         <div class="bg-white shadow-md rounded-lg p-6">
-            <form action="{{ route('reservations.update', $reservation->id) }}" method="POST">
+            <form action="/reservations/reservations/{{$reservation->id}}/update" method="POST">
                 @csrf
-                @method('PUT')
-
                 <h1 class="text-2xl font-bold mb-4">Edit Reservation for {{ $reservation->fullname }}</h1>
-
                 <div class="grid grid-cols-2 gap-4 mb-4">
                     <div>
                         <label class="block font-semibold">Full Name</label>

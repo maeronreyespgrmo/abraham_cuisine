@@ -18,6 +18,12 @@
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('designer')" :active="request()->routeIs('designer')">
+                        {{ __('Edit Site') }}
+                    </x-nav-link>
+                </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('feedbacks')" :active="request()->routeIs('feedbacks')">
                         {{ __('Feedbacks') }}
                     </x-nav-link>
@@ -27,11 +33,11 @@
                         {{ __('Products') }}
                     </x-nav-link>
                 </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                {{-- <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('backgrounds')" :active="request()->routeIs('backgrounds')">
                         {{ __('Backgrounds') }}
                     </x-nav-link>
-                </div>
+                </div> --}}
           
             </div>
 
@@ -51,8 +57,12 @@
 
                     <!-- Notification Dropdown -->
                 
-                    <div x-show="showNotifications" @click.away="showNotifications = false"
-                        class="absolute right-0 mt-2 w-56 bg-white border border-gray-200 rounded-md shadow-lg z-50">
+                    <div 
+                    x-show="showNotifications" 
+                    @click.away="showNotifications = false" 
+                    class="absolute right-0 mt-2 w-[400px] bg-white border border-gray-200 rounded-md shadow-lg z-50"
+                    style="width: 300px;">
+                    
                         <div class="p-4 font-semibold border-b">Notifications</div>
                         <div class="notifs max-h-64 overflow-y-auto px-4 py-2">
                             <!-- Dynamic notifications go here -->
@@ -121,12 +131,14 @@
                                     d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V4a2 2 0 10-4 0v1.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                             </svg>
                             <!-- Red Dot -->
-                            <span id="toggledot" class="absolute top-0 right-0 block h-2 w-2 rounded-full ring-2 ring-white bg-red-500"></span>
+                            <span id="toggledots" class="absolute top-0 right-0 block h-2 w-2 rounded-full ring-2 ring-white bg-red-500"></span>
                         </button>
                     
                         <!-- Notification Dropdown -->
                         <div x-show="showNotifications" @click.away="showNotifications = false"
-                            class="absolute right-0 mt-2 w-56 bg-white border border-gray-200 rounded-md shadow-lg z-50">
+                            class="absolute right-0 mt-2 w-56 bg-white border border-gray-200 rounded-md shadow-lg z-50"
+                            style="width: 300px;"
+                            >
                             <div class="p-4 font-semibold border-b">Notifications</div>
                     
                             <div class="notifs max-h-64 overflow-y-auto px-4 py-2">
@@ -160,6 +172,11 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('designer')" :active="request()->routeIs('designer')">
+                {{ __('Edit Site') }}
+            </x-responsive-nav-link>
+
             <x-responsive-nav-link :href="route('feedbacks')" :active="request()->routeIs('feedbacks')">
                 {{ __('Feedbacks') }}
             </x-responsive-nav-link>
@@ -167,9 +184,9 @@
             <x-responsive-nav-link :href="route('product')" :active="request()->routeIs('products')">
                 {{ __('Products') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('backgrounds')" :active="request()->routeIs('backgrounds')">
+            {{-- <x-responsive-nav-link :href="route('backgrounds')" :active="request()->routeIs('backgrounds')">
                 {{ __('Backgrounds') }}
-            </x-responsive-nav-link>
+            </x-responsive-nav-link> --}}
         </div>
 
         <!-- Responsive Settings Options -->
@@ -202,7 +219,9 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     var toggledot = document.getElementById("toggledot");
+    var toggledots = document.getElementById("toggledots");
     toggledot.style.display = "none";
+    toggledots.style.display = "none";
     function notifs(){
         $.ajax({
                 url: "{{ route('notifications.data') }}",
@@ -215,7 +234,7 @@
 
                         let messagessDiv = `
                     <ul class="max-h-64 overflow-y-auto" id="notification-list">
-                                <a href="/notification">
+                                <a href="/notifications">
                                     <li class="px-4 py-2 text-sm text-gray-700"> 
                                     ${notification.name} ${notification.description}<br>
                                         ${notification.date}
@@ -236,8 +255,10 @@
         .listen(".message.sent", function (event) {
             console.log("Received:", event);
             alert("hihi");
-            notifs()
             toggledot.style.display = "block";
+            toggledots.style.display = "block";
+            notifs()
+    
         });
     });
 </script>

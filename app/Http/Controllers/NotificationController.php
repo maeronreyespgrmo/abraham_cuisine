@@ -16,7 +16,7 @@ class NotificationController extends Controller
 
     public function index_data(Request $request)
     {
-       $notification = Notification::all();
+       $notification = Notification::orderBy('id', 'DESC')->get();
        return$notification;
     }
 }

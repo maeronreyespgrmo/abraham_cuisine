@@ -36,13 +36,18 @@
                     
                         <!-- Description Field -->
                         <div class="mb-3">
-                            <label for="description" class="form-label">Description</label>
+                            <label for="description" class="form-label">Description(Including)</label>
                             <textarea class="form-control" id="description" name="description" rows="3" value="{{$product->description}}" required>{{$product->description}}</textarea>
                         </div>
 
                         <div class="mb-3">
                             <label for="name" class="form-label">Price</label>
                             <input type="number" class="form-control" id="price" name="price" value="{{$product->price}}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Preparation Time</label>
+                            <input type="number" class="form-control" id="preparation_time" name="preparation_time" value="{{$product->preparation_time}}" required>
                         </div>
                         
 

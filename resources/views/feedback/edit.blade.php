@@ -10,7 +10,7 @@
     <!-- Link to Bootstrap 4 for styling the page and making it responsive -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
+<body style="background-image: url(../img/boodle_fiesta.png);background-size: cover; ">
 
 <!-- Main container for the form -->
 <div class="container mt-5">
@@ -19,7 +19,7 @@
     <!-- Begin the form section -->
 
     @include('layouts.message')
-    <form action="/feedbacks/{{$feedbacks->id}}/update" method="POST">
+    <form action="" method="POST">
         @csrf
         <!-- Question 1 -->
         <div class="form-group">
@@ -334,7 +334,7 @@
         <div class="form-group">
             <label for="q10">Other Comments</label><br>
             <!-- A wide textarea field -->
-            <textarea class="form-control" name="other_comments" rows="5" placeholder="Enter your comments here...">
+            <textarea class="form-control" name="other_comments" rows="5" placeholder="Enter your comments here..." required>
             {{ $feedback_scores->other_comments}}
             </textarea>
         </div>
@@ -357,7 +357,7 @@ If you have concerns about your data, you may contact us at [restaurant email/co
 
 
         <!-- Submit button -->
-        <button type="submit" class="btn btn-primary btn-block">Submit Survey</button>
+        {{-- <button type="submit" class="btn btn-primary btn-block">Submit Survey</button> --}}
     </form>
 </div>
 

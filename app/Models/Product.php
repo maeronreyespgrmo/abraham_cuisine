@@ -15,6 +15,7 @@ class Product extends Model
         'product_type',
         'price',
         'pax',
+        'preparation_time',
         'image_name',
     ];
     protected $table = 'tbl_products'; 

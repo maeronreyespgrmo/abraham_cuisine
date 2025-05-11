@@ -36,7 +36,7 @@
                     
                         <!-- Description Field -->
                         <div class="mb-3">
-                            <label for="description" class="form-label">Description</label>
+                            <label for="description" class="form-label">Description(Including)</label>
                             <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
                         </div>
 
@@ -57,6 +57,11 @@
                         <div class="mb-3">
                             <label for="name" class="form-label">Pax</label>
                             <input type="text" class="form-control" id="pax" name="pax" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Preparation Time</label>
+                            <input type="text" class="form-control" id="preparation_time" name="preparation_time" required>
                         </div>
 
                         <!-- Image Upload Field -->

@@ -17,7 +17,9 @@ class ReservationFactory extends Factory
     public function definition(): array
     {
         return [
-            'fullname' => $this->faker->name,
+            'first_name' => $this->faker->firstName,
+            'middle_name' => $this->faker->name,
+            'last_name' => $this->faker->lastName,
             'contact' => $this->faker->phoneNumber,
             'email' => $this->faker->email,
             'address' => $this->faker->address,

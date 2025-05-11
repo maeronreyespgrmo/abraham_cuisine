@@ -30,8 +30,6 @@
 
 <link rel="stylesheet" href="{{ asset('css/food_menu.css') }}">
 
-
-
 <style>
 /* Enable smooth scroll */
 html {
@@ -48,10 +46,96 @@ visibility: visible !important;
 z-index:99999;
 background-color: white;
 }
+
 .custom-container {
 width: 90%;
 margin: 0 auto; /* centers the div */
 }
+
+.banner_part:after {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  content: "";
+  bottom: -100px; /* Adjusted further down */
+  z-index: -1;
+  background: url(../img/{{$array['banner_image_overlay']->section_image}}) bottom right no-repeat;
+  right: 19%;
+}
+
+.banner_part {
+  height: 900px;
+  position: relative;
+  /* background-color:red; */
+  /* background-image: url(../img/{{$array['banner_image']->section_image}});
+  background-repeat: no-repeat;
+  background-size: 41%;
+  background-position: top right; */
+}
+
+   .trapezoid {
+    --p: 100px;
+    width: 38%;
+    aspect-ratio: 2 / 3;
+    clip-path: polygon(0 var(--p), 0 calc(100% - var(--p)), 100% 100%, 100% 0);
+    float: right;
+    margin-top:-100px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .trapezoid img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+.exclusive_item_part:after {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  content: "";
+  bottom: -250px;
+  z-index: -1;
+  background: url(../img/{{$array['sidebar_logo_1']->section_image}}) bottom right no-repeat;
+  background-size: 15% 65%;
+  right: 0px;
+}
+
+.about_bg:after {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  content: "";
+  bottom: 133px;
+  z-index: -1;
+  background: url(../img/{{$array['sidebar_logo_2']->section_image}}) bottom right no-repeat;
+  background-size: 15% 60%;
+  right: 0px;
+}
+
+
+.circle {
+      width: 400px;
+      height: 400px;
+      background-color: #4B5320;
+      border-radius: 50%;
+      overflow: hidden; /* Ensures image stays within the circle */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+.about_img img{
+  width: 100%;
+      height: 100%;
+      object-fit: cover; /* Keeps aspect ratio while covering the div */
+      display: block;
+
+}
+
+
+
 </style>
 </head>
 
@@ -61,7 +145,7 @@ margin: 0 auto; /* centers the div */
 <div class="row align-items-center">
 <div class="col-lg-12">
 <nav class="navbar navbar-expand-lg navbar-light">
-<a class="navbar-brand" href="https://srv766420.hstgr.cloud"> <img class="" src="img/logo.png" alt="logo" height="70" width="250"> </a>
+<a class="navbar-brand" href="https://srv766420.hstgr.cloud"> <img class="" src="img/{{$array['menu_logo']->section_image}}" alt="logo" height="70" width="250"> </a>
 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 <span class="navbar-toggler-icon"></span>
 </button>
@@ -105,22 +189,23 @@ margin: 0 auto; /* centers the div */
 </div>
 </header>
 <!-- Header part end-->
-
+<div class="trapezoid">
+  <img src="../img/{{$array['banner_image']->section_image}}" alt="Curved Shape" />
+  <!-- <img src="banner_bg.png" alt="Curved Shape" /> -->
+</div>
 <!-- Banner Part Start -->
 <section class="banner_part">
+
 <div class="container custom-container">
 <div class="row align-items-center">
 <!-- Text Section -->
-<div class="col-lg-6">
+<div class="col-lg-12">
 <div class="banner_text">
 <div class="banner_text_iner">
-<h5>Crafted with love, served with pride</h5>
-<h1>ENJOY DELICIOUS FOOD IN YOUR HEALTHY LIFE.</h1>
+<h5>{{$array['banner_title']->section_text}}</h5>
+<h1>{{$array['banner_sub_title']->section_text}}</h1>
 <p>
-Taste the essence of Filipino heritage with every bite at Abraham's Cuisine, 
-where love and tradition are always on the menu. <br> 
-Abraham's Cuisine: A celebration of Filipino culinary culture, 
-crafted with passion and served with warmth.
+{{$array['banner_body']->section_text}}
 </p>
 <div class="banner_btn">
 <div class="banner_btn_iner">
@@ -142,7 +227,7 @@ Reservation
 </div>
 
 <!-- Carousel Section -->
-<div class="col-lg-6">
+{{-- <div class="col-lg-6">
 <div id="foodCarousel" class="carousel slide move-right-padding" data-bs-ride="carousel" data-bs-interval="3000">
 <div class="carousel-inner">
 @foreach($background as $background_item)
@@ -152,7 +237,7 @@ Reservation
 @endforeach
 </div>
 </div>
-</div>
+</div> --}}
 </div>
 </section>
 <!-- Banner Part End -->
@@ -197,13 +282,12 @@ myCarousel.next(); // Move to the next slide on image click
 <div class="row">
 <div class="col-xl-5">
 <div class="section_tittle">
-<p>Popular Dishes</p>
-<h2>Our Exclusive Items</h2>
+<p>{{$array['blog_title']->section_text}}</p>
+<h2>{{$array['blog_sub_title']->section_text}}</h2>
 </div>
 </div>
 </div>
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">    
 @foreach($exclusive as $exclusive_item)
 <!-- Item 1 -->
 <div class="bg-white rounded-lg shadow-md overflow-hidden">
@@ -227,20 +311,20 @@ myCarousel.next(); // Move to the next slide on image click
 <div class="container custom-container">
 <div class="row align-items-center">
 <div class="col-sm-4 col-lg-5 offset-lg-1">
-<div class="about_img">
-<img src="img/about 1.png" alt="">
+<div class="circle">
+  <div class="about_img">
+    <img src="img/{{$array['about_logo']->section_image}}" alt="">
+    </div>
 </div>
+
 </div>
 <div class="col-sm-8 col-lg-4">
 <div class="about_text">
-<h5>Party Trays</h5>
-<h2>Feed the crowd effortlessly with party trays that make any occasion special.</h2>
-<p>Ano pang hinihintay n’yo?
-TARA NA at Patuloy na Tikman ang Sarap ng Pagkaing Abraham's Cuisine! SWAK PANG MASA, SWAK PAMPAMILYA!🤤
-✅Pagkaing Swak sa buong pamilya't barkada
-✅Swak sa budget
-✅Group Diners
-✅Spacious Facilities</p>
+<h5>{{$array['about_title']->section_text}}</h5>
+<h2>{{$array['about_sub_title']->section_text}}</h2>
+<p>
+{{$array['about_body']->section_text}}
+</p>
 </div>
 </div>
 </div>
@@ -253,17 +337,21 @@ TARA NA at Patuloy na Tikman ang Sarap ng Pagkaing Abraham's Cuisine! SWAK PANG 
 <div class="container custom-container">
 <div class="row align-items-center">
 <div class="col-sm-4 col-lg-5 offset-lg-1">
-<div class="about_img">
-<img src="img/about.png" alt="">
-</div>
+  <div class="circle">
+    <div class="about_img">
+      <img src="img/{{$array['history_logo']->section_image}}" alt="">
+      </div>
+  </div>
+
 </div>
 <div class="col-sm-8 col-lg-4">
 <div class="about_text">
-<h5>Our History</h5>
-<h2>One table, many hands, endless memories.</h2>
-<h4>Satisfying people hunger for simple pleasures</h4>
-<p>Our story began with a love for Filipino cuisine and the desire to share our heritage through the unique experience of boodle fights. Inspired by the traditional Filipino communal feast, we created a space where friends and families come together, 
-dining side-by-side, and sharing meals served on banana leaves.</p>
+<h5>{{$array['history_title']->section_text}}</h5>
+<h2>{{$array['history_sub_title']->section_text}}</h2>
+<h4>{{$array['history_sub_h_title']->section_text}}</h4>
+<p>
+{{$array['history_body']->section_text}}
+</p>
 </div>
 </div>
 </div>
@@ -277,7 +365,7 @@ dining side-by-side, and sharing meals served on banana leaves.</p>
 <div class="col-lg-12">
 <div class="Fmenu_iner text-center">
 <div class="Fmenu_iner_item">
-<h2>Food Menu</h2>
+<h2>{{$array['food_title']->section_text}}</h2>
 </div>
 </div>
 </div>
@@ -291,8 +379,8 @@ dining side-by-side, and sharing meals served on banana leaves.</p>
 <div class="row justify-content-between">
 <div class="col-lg-5">
 <div class="section_tittle" style="margin-top: -100px;">
-<p>Popular Menu</p>
-<h2>Delicious Food Menu</h2>
+<p>{{$array['food_menu_part_title']->section_text}}</p>
+<h2>{{$array['food_menu_part_sub_title']->section_text}}</h2>
 </div>
 </div>
 <div class="col-lg-6">
@@ -315,10 +403,16 @@ aria-labelledby="Special-tab">
 
 <div class="media-body align-self-center">
     <h3>{{$normal_item->name}}</h3>
-    <p>10-12 Persons</p>
-    <h5>₱ {{$normal_item->price}}</h5>
+    <p>{{$normal_item->description}}</p>
+    <p>{{$normal_item->pax}} pax</p>
+    <h5>₱{{$normal_item->price}}</h5>
+    <button onclick="addOption('{{$normal_item->name}}','{{$normal_item->id}}','{{$normal_item->preparation_time}}')" style="background-color:blue" class="mt-1 block mt-4 px-6 py-3 text-white b order-black-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+    Add to Reservation
+    </button>
 </div>
+
 </div>
+
 </div>
 
 @endforeach
@@ -366,18 +460,72 @@ aria-labelledby="Launch-tab">
 </div>
 @endif
 
-<!-- Reservation Form -->
-<form action="/reservations/store" method="POST">
-@csrf <!-- CSRF token for security -->
+@if(session('errors'))
+<div class="mb-4 p-4 bg-red-500 text-white rounded-md">
+  {{ session('errors') }}
+</div>
+@endif
 
+<!-- Reservation Form -->
+<form action="{{ route('reservations.store') }}" method="POST" enctype="multipart/form-data">
+@csrf <!-- CSRF token for security -->
 <div class="space-y-4" id="reservation">
 <!-- Full Name -->
-<div>
+{{-- <div>
 <label for="fullname" class="block text-sm font-medium text-gray-700">Full Name:</label>
 <input type="text" id="fullname" name="fullname"
 class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
 value="{{ old('fullname') }}" required>
 @error('fullname')
+<p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+@enderror
+</div> --}}
+<div class="row">
+  <!-- First Name -->
+  <div class="col-sm-4">
+    <label for="Firstname" class="block text-sm font-medium text-gray-700">First Name:</label>
+    <input type="text" id="first_name" name="first_name"
+    class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+    value="{{ old('first_name') }}" required>
+    @error('first_name')
+    <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+    @enderror
+    </div>
+
+    <!-- Middle Name -->
+    <div class="col-sm-4">
+      <label for="fullname" class="block text-sm font-medium text-gray-700">Middle Name:</label>
+      <input type="text" id="middle_name" name="middle_name"
+      class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+      value="{{ old('middle_name') }}" required>
+      @error('middle_name')
+      <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+      @enderror
+    </div>
+    <!-- Last Name -->
+    <div class="col-sm-4">
+      <label for="last_name" class="block text-sm font-medium text-gray-700">Last Name:</label>
+      <input type="text" id="last_name" name="last_name"
+      class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+      value="{{ old('last_name') }}" required>
+      @error('last_name')
+      <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+      @enderror
+    </div>
+</div>
+
+
+
+
+
+
+<!-- Time of Arrival -->
+<div>
+<label for="fullname" class="block text-sm font-medium text-gray-700">Time of Arrival:</label>
+<input type="datetime-local" id="time_arrival" name="time_arrival"
+class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+value="{{ old('time_arrival') }}" required>
+@error('time_arrival')
 <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
 @enderror
 </div>
@@ -405,6 +553,40 @@ value="{{ old('email') }}" required>
 </div>
 
 <div>
+<label for="address" class="block text-sm font-medium text-gray-700">Province:</label>
+<select id="province_select" name="province_select"
+class="select2-multiple form-control" Required="required">
+<option selected disabled>Select Province</option>
+@foreach ($province as $item)
+    <option value="{{ $item->code }}">{{ $item->name }}</option>
+@endforeach
+</select>
+@error('province')
+<p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+@enderror
+</div>
+
+<div>
+<label for="address" class="block text-sm font-medium text-gray-700">Municipality:</label>
+<select class="select2-multiple form-control" name="town_select"
+id="town_select" Required="required">
+</select>
+@error('province')
+<p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+@enderror
+</div>
+
+<div>
+<label for="address" class="block text-sm font-medium text-gray-700">Barangays:</label>
+<select class="select2-multiple form-control" name="barangay_select"
+id="barangay_select" Required="required">
+</select>
+@error('province')
+<p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+@enderror
+</div>
+
+<div>
 <label for="address" class="block text-sm font-medium text-gray-700">Address:</label>
 <input type="text" id="address" name="address"
 class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
@@ -413,7 +595,6 @@ value="{{ old('address') }}" required>
 <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
 @enderror
 </div>
-
 
 <!-- TABLE PAX -->
 <div>
@@ -426,7 +607,23 @@ value="{{ old('pax') }}" required>
 @enderror
 </div>
 
+<div>
+<label for="address" class="block text-sm font-medium text-gray-700">Food your order:</label>
+<select id="food_order" name="food_order[]" multiple="multiple" style="width:1000px;">
+</select>
+@error('pax')
+<p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+@enderror
+</div>
 
+<div style="display:none">
+<label for="address" class="block text-sm font-medium text-gray-700">Food your order:</label>
+<select id="time_preparation" name="time_preparation[]" multiple="multiple" style="width:1000px;">
+</select>
+@error('pax')
+<p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+@enderror
+</div>
 
 <!-- Table -->
 {{-- <div>
@@ -467,6 +664,17 @@ value="{{ old('schedule') }}" required>
 @enderror
 </div>
 
+<!-- Payment Method -->
+<div>
+<label for="payment_method" class="block text-sm font-medium text-gray-700">Attach Payment Reciept:</label>
+<input type="file" id="payment_method" name="payment_method"
+class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+value="{{ old('payment_method') }}" required>
+@error('payment_method')
+<p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+@enderror
+</div>
+
 {{-- <!-- Status -->
 <div>
 <label for="status" class="block text-sm font-medium text-gray-700">Status:</label>
@@ -487,7 +695,7 @@ required>
 <!-- Submit Button -->
 <div>
 <button type="submit"
-class="w-full mt-4 px-6 py-3 bg-indigo-600 text-black rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+class="w-full mt-4 px-6 py-3 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
 Create Reservation
 </button>
 </div>
@@ -514,7 +722,7 @@ scheduleInput.setAttribute("min", formattedDate); // Set the minimum date to the
 <h2>Let's Celebrate</h2>
 <div class="intro_video_icon">
 <a id="play-video_1" class="video-play-button popup-youtube"
-href="./img/Celebrate 1.mp4">
+href="./img/{{$array['video_part']->section_video}}">
 <span class="ti-control-play"></span>
 </a>
 </div>
@@ -561,18 +769,18 @@ referrerpolicy="no-referrer-when-downgrade">
 </div>
 <div class="col-xl-3 col-sm-6 col-md-4">
 <div class="single-footer-widget footer_2">
-<h4>Contact us</h4>
+<h4>{{$array['contact_us_title']->section_text}}</h4>
 <div class="contact_info" style="margin-top: -15px;">
-<p><span> Address :</span>National Highway Road Brgy. Sampaloc, Pagsanjan, Laguna</p>
-<p><span> Phone :</span>+63 923-513-8732</p>
-<p><span> Email : </span>abramscuisine01@gmail.com</p>
+<p>{{$array['contact_us_address']->section_text}}</p>
+<p>{{$array['contact_us_phone_no']->section_text}}</p>
+<p>{{$array['contact_us_email']->section_text}}</p>
 </div>
 </div>
 </div>
 <div class="col-xl-3 col-sm-8 col-md-6" style="padding-left: 60px;">
 <div class="single-footer-widget footer_3">
-<h4>Newsletter</h4>
-<p style="margin-top: -15px;">Psalm 34:8<br> "Taste and see that the LORD is good; blessed is the one who takes refuge in him".</p>
+<h4>{{$array['newsletter_title']->section_text}}</h4>
+<p style="margin-top: -15px;">{{$array['newsletter_psalm_body']->section_text}}</p>
 <link rel="stylesheet" href="https://mail.google.com/mail/u/0/#inbox">
 <form id="emailForm" action="javascript:void(0);">
 <div class="form-group">
@@ -631,7 +839,73 @@ emailInput.value = '';
 <script src="js/gijgo.min.js"></script>
 <script src="js/jquery.nice-select.min.js"></script>
 <script src="js/custom.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
+     $('#food_order').select2({
+      placeholder: 'Select an option',
+      allowClear: true
+    });
+function addOption(name,id,preparation_time) {
+  const select = document.getElementById("food_order");
+  const time_preparation = document.getElementById("time_preparation");
+  const newValue = name
+
+  const exists = Array.from(select.options).some(opt => opt.value === newValue)
+  if(!exists){
+    const option = document.createElement("option");
+    const option2 = document.createElement("option");
+
+    option.value = name;
+    option.text = name;
+    option.selected = true;
+
+    option2.value = preparation_time;
+    option2.text = preparation_time;
+    option2.selected = true;
+
+    select.add(option);
+    time_preparation.add(option2); // or select.appendChild(option)
+  }
+  else{
+    alert("Exists")
+  }
+
+  
+}
+
+$("#town_select").change(function () {
+		var tow_code = $(this).val();
+
+		$.ajax({
+			url: '/get-barangays/' + tow_code,
+			success: function (data) {
+				var html = '<option value="" selected>Select..</option>';
+				$.each(data, function (i, j) {
+					html += '<option value="' + j.code + '">' + j.name + '</option>';
+				})
+				$("#barangay_select").find("option").remove().end();
+				$("#barangay_select").append(html);
+			}
+		})
+	});
+
+	$("#province_select").change(function () {
+		var prov_code = $(this).val();
+
+		$.ajax({
+			url: '/get-towns/' + prov_code,
+			success: function (data) {
+				var html = '';
+				$.each(data, function (i, j) {
+					html += '<option value="' + j.code + '">' + j.name + '</option>';
+				})
+				$("#town_select").find("option").remove().end();
+				$("#town_select").append(html);
+			}
+		})
+	});
+
 // Disable past dates for datetime-local input
 document.addEventListener("DOMContentLoaded", function () {
 const scheduleInput = document.getElementById("schedule");
@@ -668,6 +942,8 @@ confirmationMessage.style.display = 'block';
 // Clear the input field
 emailInput.value = '';
 }
+
+
 </script>
 </body>
 

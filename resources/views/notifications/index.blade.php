@@ -131,7 +131,7 @@
 
                     let messageDiv = `
                     <div class="message">
-                    <div class="avatar">${notification.name.split()[0]}</div>
+                    <div class="avatar">${notification.name.charAt(0).toUpperCase()} ${notification.name.slice(-1).toUpperCase()}</div>
                     <div class="message-content">
                     <div class="message-header">
                     <span class="sender">${notification.name}</span>

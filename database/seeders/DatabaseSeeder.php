@@ -24,15 +24,22 @@ class DatabaseSeeder extends Seeder
     Table::factory(10)->create();
 
     // Seed reservations (50 reservations for example)
-    Reservation::factory(50)->create();
+    // Reservation::factory(50)->create();
 
     // Seed reservation lists (30 reservation lists for example)
-    ReservationList::factory(30)->create();
+    // ReservationList::factory(30)->create();
 
         $this->call([
             UserSeeder::class,
             ProductSeeder::class,
             BackgroundSeeder::class,
+            TableSeeder::class,
+            EditPageSeeder::class,
+            MenuSeeder::class,
+            PSGCTownsTableSeeder::class,
+            PSGCRegionsTableSeeder::class,
+            PSGCProvincesTableSeeder::class,
+            PSGCBarangaysTableSeeder::class,
         ]);
     }
 }
