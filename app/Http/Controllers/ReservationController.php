@@ -19,14 +19,14 @@ class ReservationController extends Controller
    // Display a listing of reservations
    public function index()
    {
-        $page = [
-            'name'      =>  'Reservation',
-            'title'     =>  'Reservation',
-            'crumb'     =>  array(
-            "" => '/dashboard',
-            "" => ''
-            )
-        ];
+            $page = [
+                'name'      =>  'Reservation',
+                'title'     =>  'Reservation',
+                'crumb'     =>  array(
+                "" => '/dashboard',
+                "" => ''
+                )
+            ];
     
     // Retrieve all reservations
     $reservations = DB::table('reservations')
@@ -65,7 +65,7 @@ class ReservationController extends Controller
                 'first_name' => 'required|string|max:255',
                 'middle_name' => 'required|string|max:255',
                 'last_name' => 'required|string|max:255',
-                'contact' => 'required|digits:11|string|max:255',
+                'contact' => 'required|string|max:255',
                 'email' => 'required|email',
                 'time_arrival' => 'required|string|max:255',
                 'time_departure' => 'required|string|max:255',
@@ -79,7 +79,13 @@ class ReservationController extends Controller
             ]);
 
             if (Reservation::where('table', $request->table)->exists()) {
-               return back()->withErrors("Table has been reserved!");
+            //    return back()->withErrors("Table has been reserved!");
+              return redirect()->route('welcome')
+    ->withErrors([
+        'error' => 'Table has been reserved!'
+    ])
+    ->withInput($request->all())
+    ->with('scrollTo', 'scroll-target'); // ✅ This is now a real session key
             } 
             else {
                     $image = $request->file('payment_method');
@@ -139,7 +145,11 @@ class ReservationController extends Controller
                     Mail::to($request->email)->send(new TestMail($mailInfo));
 
                     //return"we"; 
-                    return redirect()->route('welcome')->with('success', 'Reservation created successfully!');
+                    // return redirect()->route('welcome')->with('success', 'Reservation created successfully!');
+                    return redirect()->route('welcome')->with([
+                    'success' => 'Saved successfully!',
+                    'scrollTo' => 'scroll-target'
+                    ]);
             }
 
         } catch (\Exception $e) {
@@ -152,8 +162,8 @@ class ReservationController extends Controller
             // return redirect()->back()->with('success', 'Feedback submitted successfully!');
             // dd($e->getMessage());
             // return $e->getMessage();
-            return redirect()->back()->withErrors($e->getMessage())->withInput();
-
+            // return redirect()->back()->withErrors($e->getMessage())->withInput();
+            return redirect()->route('welcome')->withErrors($e->getMessage());
             // return redirect()->route('welcome')->withErrors($e->getMessage());
         }
     }

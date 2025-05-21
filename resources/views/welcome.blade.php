@@ -56,6 +56,10 @@
   margin: 0 auto; /* centers the div */
   }
 
+  #scroll-target:focus {
+    outline: 2px solid #f00;
+    outline-offset: 4px;
+}
   .banner_part:after {
     width: 100%;
     height: 100%;
@@ -519,8 +523,22 @@
   <!--::reservation_part start::-->
   {{-- reservation --}}
 
+
+
   <div id="reservation-page" class="container custom-container mx-auto p-6">
   <h2 class="text-2xl font-semibold mb-6">Create a Reservation</h2>
+
+  @if(session('success'))
+  <div id="scroll-target">
+  {{-- {{ session('success') }} --}}
+  </div>
+  @endif
+
+@if($errors->has('error'))
+    <div id="scroll-target" tabindex="-1">
+        {{-- {{ $errors->first('error') }} --}}
+    </div>
+@endif
 
    @include('layouts.message')
   <!-- Reservation Form -->
@@ -946,6 +964,15 @@
   <script src="https://cdn.jsdelivr.net/jquery.validation/1.19.5/jquery.validate.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"></script>
   <script>
+   document.addEventListener('DOMContentLoaded', function () {
+       @if(session('scrollTo'))
+            const el = document.getElementById('{{ session('scrollTo') }}');
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                el.focus({ preventScroll: true });
+            }
+        @endif
+    });
 function reserve(){
       const modalElement = document.getElementById('productModal');
     const modal = new bootstrap.Modal(modalElement);
