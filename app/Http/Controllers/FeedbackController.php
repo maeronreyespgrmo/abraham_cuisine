@@ -20,6 +20,15 @@ class FeedbackController extends Controller
 
    public function show()
    {
+
+        $page = [
+            'name'      =>  'Feedback',
+            'title'     =>  'Feedbacks  ',
+            'crumb'     =>  array(
+            "Show" => '/feedbacks/show',
+            "" => ''
+        )
+        ];
     // $feedback_scores_positive = FeedbackScore::where('sentimental','=','positive')->count();
     $feedback_scores_negative = FeedbackScore::where('sentimental','=','negative')->count();
     $feedback_scores_neutral = FeedbackScore::where('sentimental','=','neutral')->count();
@@ -52,10 +61,8 @@ class FeedbackController extends Controller
 
     $feedback_question_average = array($q1,$q2,$q3,$q4,$q5,$q6,$q7,$q8,$q9,$q10);
 
-
-    
     $score = array($feedback_scores_poor,$feedback_scores_good,$feedback_scores_average,$feedback_scores_excellent);
-      return view('feedback.show', compact('score','feedback_scores','feedback_question_average'));
+      return view('feedback.show', compact('score','feedback_scores','feedback_question_average','page'));
    }
 
    public function store(Request $request)

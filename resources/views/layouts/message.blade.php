@@ -12,7 +12,7 @@
         @endforeach
     </div>
 
-@else
+@else 
 
     @if (session('success'))
         <div class="alert alert-success" role="alert">
@@ -22,7 +22,7 @@
             <strong class="text-capitalize">Success!</strong><br>
 
             {{ session('success') }}
-
+            
         </div>
     @endif
 

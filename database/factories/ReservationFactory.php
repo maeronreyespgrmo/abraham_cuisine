@@ -22,7 +22,6 @@ class ReservationFactory extends Factory
             'last_name' => $this->faker->lastName,
             'contact' => $this->faker->phoneNumber,
             'email' => $this->faker->email,
-            'address' => $this->faker->address,
             'table' => $this->faker->numberBetween(1, 10), // Using integer IDs for tables
             'pax' => $this->faker->numberBetween(1, 10),
             'schedule' => $this->faker->dateTimeBetween('+1 days', '+1 week'),

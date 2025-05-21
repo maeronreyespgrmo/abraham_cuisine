@@ -1,9 +1,8 @@
-<style>
-    #myPieChart {
-        width: 400px !important; 
-        height: 400px !important;
-    }
-</style>
+@extends('layouts.master')
+
+@section('page_name', $page['name'])
+
+@section('page_title', $page['title'])
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
@@ -12,18 +11,15 @@
 <!-- DataTables JS -->
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Products') }}
-        </h2>
-    </x-slot>
-
-    <div class="container mx-auto px-4 py-8">
-        @include('layouts.message')
-
-        <div class="bg-white shadow-md rounded-lg p-12">
-            <div class="row">
+@section('content')
+    @include('layouts.message')
+	<div class="card">
+		{{-- <div class="card-header">
+		                <a href="/product/create" class="btn btn-primary">Create New</a>
+		</div> --}}
+		<!-- /.card-header -->
+		<div class="card-body">
+             <div class="row">
                 <div class="col-md-12">
                     <form action="/product/{{$product->id}}/update" method="POST" enctype="multipart/form-data">
                         @csrf
@@ -54,7 +50,7 @@
                         <div class="mb-3">
                             <label for="name" class="form-label">Product Type</label>
                             <select name="type">  
-                                <option value="{{$product->type}}">{{$product->type}}</option>
+                                <option value="{{$product->product_type}}">{{$product->product_type}}</option>
                                 <option value="Exclusive">Exclusive</option>
                                 <option value="Special">Special</option>
                             </select>
@@ -82,6 +78,13 @@
                     
                 </div>
             </div>
-        </div>
-    </div>
-</x-app-layout>
+		</div>
+		<!-- /.card-body -->
+	</div>
+	<!-- /.card -->
+
+    @section('page_script')
+
+    @endsection
+
+@endsection

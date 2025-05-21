@@ -84,24 +84,24 @@ margin: 0 auto; /* centers the div */
   background-position: top right; */
 }
 
-   .trapezoid {
-    --p: 100px;
-    width: 38%;
-    aspect-ratio: 2 / 3;
-    clip-path: polygon(0 var(--p), 0 calc(100% - var(--p)), 100% 100%, 100% 0);
-    float: right;
-    margin-top:-80px;
-    overflow: hidden;
-    position: relative;
-    z-index:100;
-  }
+.trapezoid {
+--p: 100px;
+width: 38%;
+aspect-ratio: 2 / 3;
+clip-path: polygon(0 var(--p), 0 calc(100% - var(--p)), 100% 100%, 100% 0);
+float: right;
+margin-top:-80px;
+overflow: hidden;
+position: relative;
+z-index:100;
+}
 
-  .trapezoid img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
+.trapezoid img {
+width: 100%;
+height: 100%;
+object-fit: cover;
+display: block;
+}
 
 .hey2{
   width: 20%;
@@ -130,15 +130,41 @@ margin: 0 auto; /* centers the div */
 }
 
 .circle {
-      width: 400px;
-      height: 400px;
-      background-color: #4B5320;
-      border-radius: 50%;
-      overflow: hidden; /* Ensures image stays within the circle */
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+width: 400px;
+height: 400px;
+background-color: #4B5320;
+border-radius: 50%;
+overflow: hidden; /* Ensures image stays within the circle */
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+@media (max-width: 576px) {
+.trapezoid {
+display: none;
+}
+} 
+
+@media only screen and (min-width: 576px) and (max-width: 767px) {
+.trapezoid {
+display: none;
+}
+}
+
+
+@media only screen and (min-width: 992px) and (max-width: 1200px) {
+.trapezoid {
+display: none;
+}
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+.trapezoid {
+display: none;
+}
+}
+
 
 </style>
 </head>
@@ -521,22 +547,6 @@ value="{{ old('fullname') }}" required>
     </div>
 </div>
 
-
-
-
-
-
-<!-- Time of Arrival -->
-<div>
-<label for="fullname" class="block text-sm font-medium text-gray-700">Time of Arrival:</label>
-<input type="datetime-local" id="time_arrival" name="time_arrival"
-class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-value="{{ old('time_arrival') }}" required>
-@error('time_arrival')
-<p class="mt-1 text-sm text-red-500">{{ $message }}</p>
-@enderror
-</div>
-
 <!-- Contact -->
 <div>
 <label for="contact" class="block text-sm font-medium text-gray-700">Contact:</label>
@@ -593,7 +603,7 @@ id="barangay_select" Required="required">
 @enderror
 </div>
 
-<div>
+{{-- <div>
 <label for="address" class="block text-sm font-medium text-gray-700">Address:</label>
 <input type="text" id="address" name="address"
 class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
@@ -601,7 +611,7 @@ value="{{ old('address') }}" required>
 @error('address')
 <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
 @enderror
-</div>
+</div> --}}
 
 <!-- TABLE PAX -->
 <div>
@@ -660,27 +670,67 @@ Table {{ $tableNumber }}
 @enderror
 </div>
 
-<!-- Schedule -->
-<div>
-<label for="schedule" class="block text-sm font-medium text-gray-700">Schedule:</label>
-<input type="datetime-local" id="schedule" name="schedule"
-class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-value="{{ old('schedule') }}" required>
-@error('schedule')
-<p class="mt-1 text-sm text-red-500">{{ $message }}</p>
-@enderror
-</div>
+ <!-- Schedule -->
+  <div>
+  <label for="schedule" class="block text-sm font-medium text-gray-700">Schedule:</label>
+  <input type="text" id="schedule" name="schedule"
+  min={new Date().toISOString().split('T')[0]}
+  class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+  value="{{ old('schedule') }}" required>
+  @error('schedule')
+  <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+  @enderror
+  </div>
 
-<!-- Payment Method -->
-<div>
-<label for="payment_method" class="block text-sm font-medium text-gray-700">Attach Payment Reciept:</label>
-<input type="file" id="payment_method" name="payment_method"
-class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-value="{{ old('payment_method') }}" required>
-@error('payment_method')
-<p class="mt-1 text-sm text-red-500">{{ $message }}</p>
-@enderror
-</div>
+  <!-- Time of Arrival -->
+  <div>
+  <label for="fullname" class="block text-sm font-medium text-gray-700">Time of Arrival:</label>
+  <input type="time" id="time_arrival" name="time_arrival"
+  class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+  value="{{ old('time_arrival') }}" required>
+  @error('time_arrival')
+  <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+  @enderror
+  </div>
+
+    <!-- Time of Departure -->
+  <div>
+  <label for="fullname" class="block text-sm font-medium text-gray-700">Time of Departure:</label>
+  <input type="time" id="time_departure" name="time_departure"
+  class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+  value="{{ old('time_departure') }}" required>
+  @error('time_departure')
+  <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+  @enderror
+  </div>
+
+  <div>
+  <lable><b>The schedule will be 10am to 9pm</b></lable>
+  </div>
+
+
+
+  <!-- Payment Method -->
+  <div class="row">
+  <div class="col-sm-10">
+  <label for="payment_method" class="block text-sm font-medium text-gray-700">Attach Payment Reciept:</label>
+  <input
+   id="submitBtn" onclick="handleClick()"
+  type="file" id="payment_method" name="payment_method"
+  class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+  value="{{ old('payment_method') }}" required>
+  @error('payment_method')
+  <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+  @enderror
+  </div>
+  <div class="col-sm-2" data-toggle="modal" data-target="#modal_qrcode">
+  <img src="img/{{$array['qrcode_logo']->section_image}}" width="500" height="500">
+  </div>
+  </div>
+
+  <div>
+  <center><label><b>50% downpayment per reservation</b></label></center>
+  </div>
 
 {{-- <!-- Status -->
 <div>
@@ -809,8 +859,15 @@ referrerpolicy="no-referrer-when-downgrade">
 
 <!-- Confirmation Message -->
 <p id="confirmationMessage" style="display: none; color: green; margin-right: -50px; margin-top: -10px;">Thank you! Your email has been submitted.</p>
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 <script>
+$("#schedule").datepicker({
+dateFormat: "yy-mm-dd",
+minDate: 0 
+});
+
 function submitEmail() {
 // Get the email address from the input field
 const emailInput = document.getElementById('emailInput');
@@ -850,6 +907,7 @@ emailInput.value = '';
 @include('designer.modal_sidebar_1')
 @include('designer.modal_sidebar_2')
 @include('designer.modal_video')
+@include('designer.modal_qrcode')
 
 <script src="js/jquery-1.12.1.min.js"></script>
 <script src="js/popper.min.js"></script>
@@ -1356,6 +1414,17 @@ edit_newsletter_psalm_body.addEventListener("input", () => {
     }
     });
 });
+
+  //MAX 11 NUMBER CONTACT
+  document.getElementById("contact").addEventListener("input", function (e) {
+
+  console.log(e.target.value.length)
+
+  if (e.target.value.length == 11) {
+  e.target.value = e.target.value.replace("");
+  alert("You type max 11 numbers")
+  }
+  });
 
 </script>
 

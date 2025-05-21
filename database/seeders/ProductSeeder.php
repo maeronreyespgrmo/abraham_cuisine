@@ -24,6 +24,7 @@ class ProductSeeder extends Seeder
                 'product_type' => 'Exclusive',
                 'pax' => '10-15',
                 'price' => '1000',
+                'status' => 'active',
             ],
             [
                 'name' => 'Barbeque',
@@ -33,6 +34,7 @@ class ProductSeeder extends Seeder
                 'product_type' => 'Exclusive',
                 'pax' => '10-15',
                 'price' => '1000',
+                'status' => 'active',
             ],
             [
                 'name' => 'Bf',
@@ -42,6 +44,7 @@ class ProductSeeder extends Seeder
                 'product_type' => 'Special',
                 'pax' => '10-15',
                 'price' => '1000',
+                'status' => 'active',
             ],
             [
                 'name' => 'Fried Siken',
@@ -51,6 +54,7 @@ class ProductSeeder extends Seeder
                 'product_type' => 'Special',
                 'pax' => '10-15',
                 'price' => '1000',
+                'status' => 'active',
             ],
         ]);
     }

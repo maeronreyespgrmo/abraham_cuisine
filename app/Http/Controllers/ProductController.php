@@ -11,13 +11,32 @@ class ProductController extends Controller
     //
     public function index(Request $request)
     {   
+        $page = [
+            'name'      =>  'Products',
+            'title'     =>  'Products',
+            'crumb'     =>  array(
+            "Index" => '/dashboard',
+            "" => ''
+            )
+        ];
+
         $products = Product::all();
-        return view('products.index',compact('products'));
+        return view('products.index',compact('products','page'));
     }
     
     public function create(Request $request)
     {
-        return view('products.create');
+
+                $page = [
+            'name'      =>  'Products',
+            'title'     =>  'Products',
+            'crumb'     =>  array(
+            "Index" => '/dashboard',
+            "" => ''
+            )
+        ];
+
+        return view('products.create',compact('page'));
     }
 
     public function store(Request $request)
@@ -45,6 +64,7 @@ class ProductController extends Controller
             'preparation_time' => $request->preparation_time,
             'product_type' => $request->type,
             'pax' => $request->pax,
+            'status' => 'active',
             'image_name' => $imageName,
         ]);
 
@@ -86,8 +106,17 @@ class ProductController extends Controller
 
     public function edit($id,Request $request)
     {
+        $page = [
+            'name'      =>  'Products',
+            'title'     =>  'Products',
+            'crumb'     =>  array(
+            "Edit" => '/dashboard',
+            "" => ''
+            )
+        ];
+
         $product = Product::findOrFail($id);
-        return view('products.edit',compact('product'));
+        return view('products.edit',compact('product','page'));
     }
 
     public function destroy($id)
@@ -104,4 +133,21 @@ class ProductController extends Controller
         ]);
         return redirect("/product/$id/edit")->with('success', 'successfuly added');
     }
+
+       public function active_status($id)
+    {
+        Product::where('id', $id)->update([
+            'status' => 'active',
+        ]);
+        return redirect("/product")->with('success', 'Activated');
+    }
+
+       public function inactive_status($id)
+    {
+        Product::where('id', $id)->update([
+            'status' => 'inactive',
+        ]);
+        return redirect("/product")->with('success', 'Deactivated');
+    }
+    
 }

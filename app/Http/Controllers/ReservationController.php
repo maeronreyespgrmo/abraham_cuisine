@@ -8,6 +8,7 @@ use App\Models\ReservationList;
 use App\Models\Table;
 use App\Models\FoodOrder;
 use App\Models\Notification;
+use App\Models\FeedbackScore;
 use App\Events\Notifications;
 use Illuminate\Support\Facades\DB;
 use App\Mail\TestMail;
@@ -18,18 +19,33 @@ class ReservationController extends Controller
    // Display a listing of reservations
    public function index()
    {
+        $page = [
+            'name'      =>  'Reservation',
+            'title'     =>  'Reservation',
+            'crumb'     =>  array(
+            "" => '/dashboard',
+            "" => ''
+            )
+        ];
+    
     // Retrieve all reservations
-    // $reservations = Reservation::orderBy('id', 'DESC')->get();
     $reservations = DB::table('reservations')
     ->join('tbl_psgc_provinces', 'reservations.province_code', '=', 'tbl_psgc_provinces.code')
     ->join('tbl_psgc_towns', 'reservations.town_code', '=', 'tbl_psgc_towns.code')
     ->join('tbl_psgc_barangays', 'reservations.barangay_code', '=', 'tbl_psgc_barangays.code')
     ->orderBy('reservations.id', 'DESC')
+    ->orderBy('tbl_psgc_provinces.name', 'DESC')
+    ->orderBy('tbl_psgc_towns.name', 'DESC') 
     ->select('reservations.*', 'tbl_psgc_towns.name as town_name', 'tbl_psgc_provinces.name as province_name', 'tbl_psgc_barangays.name as barangay_name')
     ->get();
 
+    $count_reservation = $reservations->count();
+    $count_feedback = FeedbackScore::all()->count();
+    
+    // return$count_reservation;
+
     // Pass data to the view
-    return view('dashboard', compact('reservations'));
+    return view('dashboard', compact('reservations','page','count_reservation','count_feedback'));
    }
 
    // Show the form for creating a new reservation
@@ -43,17 +59,16 @@ class ReservationController extends Controller
     // Store a newly created reservation in the database
     public function store(Request $request)
     {   
-        // return$request->hasFile('payment_method');
         try {
             // Validate the incoming data
             $validated = $request->validate([
                 'first_name' => 'required|string|max:255',
                 'middle_name' => 'required|string|max:255',
                 'last_name' => 'required|string|max:255',
-                'contact' => 'required|string|max:255',
+                'contact' => 'required|digits:11|string|max:255',
                 'email' => 'required|email',
                 'time_arrival' => 'required|string|max:255',
-                'address' => 'required|string',
+                'time_departure' => 'required|string|max:255',
                 'table' => 'required|string|max:255',
                 'pax' => 'required|string|max:255',
                 'schedule' => 'required|date',
@@ -63,61 +78,70 @@ class ReservationController extends Controller
                 'payment_method' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             ]);
 
-            $image = $request->file('payment_method');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('uploads/payment'), $imageName);
+            if (Reservation::where('table', $request->table)->exists()) {
+               return back()->withErrors("Table has been reserved!");
+            } 
+            else {
+                    $image = $request->file('payment_method');
+                    $imageName = time() . '.' . $image->getClientOriginalExtension();
+                    $image->move(public_path('uploads/payment'), $imageName);
 
-            // return$imageName;
-    
-            // Add the status manually (set to "pending")
-            $validated['status'] = 'pending';
+                    // return$imageName;
 
-            $validated['payment_method'] = $imageName;
-            
-            $validated['province_code'] = $request->province_select;
+                    // Add the status manually (set to "pending")
+                    $validated['status'] = 'pending';
 
-            $validated['town_code'] = $request->town_select;
+                    $validated['time_arrival'] = $request->time_arrival;
 
-            $validated['barangay_code'] = $request->barangay_select;
-        
-            // Create the reservation and store  it in the database
-            $reservation = Reservation::create($validated); 
+                    $validated['time_departure'] = $request->time_departure;
 
-            $selectedItems = $request->input('food_order'); 
-            $time_preparation = $request->input('time_preparation');
-            foreach ($selectedItems as $key=> $item) {
-               
-                $foodproduct = [
+                    $validated['payment_method'] = $imageName;
+
+                    $validated['province_code'] = $request->province_select;
+
+                    $validated['town_code'] = $request->town_select;
+
+                    $validated['barangay_code'] = $request->barangay_select;
+
+                    // Create the reservation and store  it in the database
+                    $reservation = Reservation::create($validated); 
+
+                    $selectedItems = $request->input('food_order'); 
+                    $time_preparation = $request->input('time_preparation');
+                    foreach ($selectedItems as $key=> $item) {
+
+                    $foodproduct = [
                     'reservation_id'=>$reservation->id,
                     'name' => $item,
                     'preparation_time' => $time_preparation[$key],
-                ];
-    
-                FoodOrder::create($foodproduct);
+                    ];
+
+                    FoodOrder::create($foodproduct);
+                    }
+
+
+                    $fullname = $request->first_name . "" . $request->middle_name . "" . $request->last_name;
+                    Notification::Create([
+                    'name' => $fullname,
+                    'description' => "have reserved",
+                    'date' => $request->schedule,
+                    'status' => 'Create',
+                    ]);
+
+                    broadcast(new Notifications('weadadad'));
+                    //MAIL
+                    $mailInfo = new \stdClass();
+                    $mailInfo->first_name = $request->first_name;
+                    $mailInfo->middle_name = $request->middle_name;
+                    $mailInfo->last_name = $request->last_name;
+                    $mailInfo->food_order = $selectedItems;
+
+                    Mail::to($request->email)->send(new TestMail($mailInfo));
+
+                    //return"we"; 
+                    return redirect()->route('welcome')->with('success', 'Reservation created successfully!');
             }
-            
 
-            $fullname = $request->first_name . "" . $request->middle_name . "" . $request->last_name;
-            Notification::Create([
-                'name' => $fullname,
-                'description' => "have reserved",
-                'date' => $request->schedule,
-                'status' => 'Create',
-            ]);
-        
-            broadcast(new Notifications('weadadad'));
-            //MAIL
-            $mailInfo = new \stdClass();
-            $mailInfo->first_name = $request->first_name;
-            $mailInfo->middle_name = $request->middle_name;
-            $mailInfo->last_name = $request->last_name;
-            $mailInfo->food_order = $selectedItems;
-
-            Mail::to('maeron.reyespgrmo@gmail.com')->send(new TestMail($mailInfo));
-
-            //return"we"; 
-            return redirect()->route('welcome')->with('success', 'Reservation created successfully!');
-        
         } catch (\Exception $e) {
             // You can customize this response as needed
             // return response()->json([
@@ -126,8 +150,9 @@ class ReservationController extends Controller
             //     'error' => $e->getMessage(),
             // ], 500);
             // return redirect()->back()->with('success', 'Feedback submitted successfully!');
-            dd($e->getMessage());
-            return $e->getMessage();
+            // dd($e->getMessage());
+            // return $e->getMessage();
+            return redirect()->back()->withErrors($e->getMessage())->withInput();
 
             // return redirect()->route('welcome')->withErrors($e->getMessage());
         }
@@ -149,7 +174,7 @@ class ReservationController extends Controller
        $reservation = Reservation::find($id);
 
        if (!$reservation) {
-           return response()->json(['error' => 'Reservation not found'], 404);
+               return back()->withErrors("Reservation Not Found");
        }
 
        // return a view or data for editing
@@ -196,16 +221,11 @@ class ReservationController extends Controller
        //broadcast(new Notifications('weadadad'));
 
        if (!$reservation) {
-           return response()->json(['error' => 'Reservation not found'], 404);
+               return back()->withErrors("Reservation Not Found");
        }
-
+       
        $reservation->delete();
-
-        // Retrieve all reservations
-        $reservations = Reservation::all();
-
-        // Pass data to the view
-        return view('dashboard', compact('reservations'));
+       return back()->with('success', 'Reservation deleted successfully!');
    }
 
    public function isStatus(Request $request,$id)
@@ -213,7 +233,7 @@ class ReservationController extends Controller
     $reservation = Reservation::find($request->id);
     $reservation->status = $request->status; // Laravel will escape properly
     $reservation->save();
-    
+
     return"success";
    }
 

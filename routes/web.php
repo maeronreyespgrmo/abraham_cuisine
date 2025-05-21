@@ -9,6 +9,7 @@ use App\Http\Controllers\BackgroundController;
 use App\Http\Controllers\DesignerController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\CalendarController;
 use App\Models\Reservation;
 use App\Events\Notifications;
 use App\Mail\TestMail;
@@ -45,6 +46,9 @@ Route::get('/hihi', function () {
 Route::get('/', [HomeController::class, 'index'])->name('welcome');
 Route::get('/test', [HomeController::class, 'test']);
 
+Route::get('/calendar', [CalendarController::class, 'index']);
+
+
 Route::get('/feedbacks', [FeedbackController::class, 'create']);
 Route::post('/feedbacks/store', [FeedbackController::class, 'store']);
 Route::get('/feedbacks/show', [FeedbackController::class, 'show'])->name('feedbacks');
@@ -56,11 +60,11 @@ Route::get('/feedbacks/{id}/destroy', [FeedbackController::class, 'destroy']);
 
 // })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/dashboard', [ReservationController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+    Route::get('/dashboard', [ReservationController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/product', [ProductController::class, 'index'])->name('product');
@@ -70,6 +74,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/product/{id}/update', [ProductController::class, 'update'])->name('products.update');
     Route::get('/product/{id}/destroy', [ProductController::class, 'destroy'])->name('products.destroy');
     Route::get('/product/{id}/upload_destroy', [ProductController::class, 'upload_destroy']);
+    Route::get('/product/{id}/active_status', [ProductController::class, 'active_status']);
+    Route::get('/product/{id}/inactive_status', [ProductController::class, 'inactive_status']);
 
     //DESIGNER
     Route::get('/designer', [DesignerController::class, 'index'])->name('designer');

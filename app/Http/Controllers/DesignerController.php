@@ -17,9 +17,8 @@ class DesignerController extends Controller
     public function index(Request $request)
     {   
         $background = Background::all();
-        $exclusive = Product::where('product_type', 'Exclusive')->get();
-        $normal = Product::where('product_type', 'Special')->limit(10)->get();
-
+        $exclusive = Product::where('product_type', 'Exclusive')->where('status', 'active')->get();
+        $normal = Product::where('product_type', 'Special')->where('status', 'active')->limit(10)->get();
         
         $province = PSGCProvince::all();
 
@@ -59,6 +58,7 @@ class DesignerController extends Controller
         $video_part = EditPage::where('section_sub_part', 'video_part')->first();
         $blog_title = EditPage::where('section_sub_part', 'blog_title')->first();
         $blog_sub_title = EditPage::where('section_sub_part', 'blog_sub_title')->first();
+        $qrcode_logo = EditPage::where('section_sub_part', 'qrcode_logo')->first();
 
         $array = array(
             'menu_logo'=> $menu_logo,
@@ -96,6 +96,7 @@ class DesignerController extends Controller
             'video_part'=> $video_part,
             'blog_title'=> $blog_title,
             'blog_sub_title'=> $blog_sub_title,
+            'qrcode_logo'=> $qrcode_logo,
         );
 
         // return$array['sidebar_logo_1']->section_image;

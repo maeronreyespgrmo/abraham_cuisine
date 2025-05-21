@@ -70,7 +70,7 @@ input:hover, input:focus {
   .single_padding_top {
     padding-top: 70px !important;
   }
-}
+} 
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
   .single_padding_top {
@@ -117,6 +117,8 @@ input:hover, input:focus {
     padding-top: 70px;
   }
 }
+
+
 
 a {
   text-decoration: none;

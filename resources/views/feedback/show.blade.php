@@ -1,30 +1,38 @@
+@extends('layouts.master')
+
+@section('page_name', $page['name'])
+
+@section('page_title', $page['title'])
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <style>
-    #myPieChart {
-        max-width: 100%;
-        height: auto;
+div.dt-container {
+        width: 800px;
+        margin: 0 auto;
     }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- DataTables CSS -->
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Feedbacks') }}
-        </h2>
-    </x-slot>
-
-    <div class="container mx-auto px-4 py-8">
-        @if (session('success'))
-            <div class="bg-green-100 text-green-700 p-4 rounded mb-6">
-                {{ session('success') }}
-            </div>
-        @endif
-
-        <div class="bg-white shadow-md rounded-lg p-12">
-            <div class="row">
+@section('content')
+    @include('layouts.message')
+	<div class="card">
+		{{-- <div class="card-header">
+			<a href="#" class="btn btn-primary"
+				data-toggle="modal"
+				data-target="#create_service_modal"
+			><i class="i-Add"></i> Add Service</a>
+		</div> --}}
+		<!-- /.card-header -->
+		<div class="card-body">
+                            <div class="row">
                 <div class="col-lg-8 col-md-12">
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped display nowrap" border="1">
@@ -238,17 +246,21 @@
                 </div>
 
             </div>
-        </div>
-    </div>
-
-    
-<!-- jQuery -->
+		</div>
+		<!-- /.card-body -->
+	</div>
+	<!-- /.card -->
+    <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- DataTables JS -->
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <!-- Chart.js and Plugin -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+
+        @section('page_script')
+
+
     
 
     <script>
@@ -302,4 +314,6 @@
             plugins: [ChartDataLabels]
         });
     </script>
-</x-app-layout>
+        @endsection
+
+@endsection

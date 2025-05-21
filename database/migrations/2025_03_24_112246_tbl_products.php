@@ -21,6 +21,7 @@ return new class extends Migration
            $table->string('product_type')->nullable();
            $table->string('pax')->nullable();
            $table->string('price')->nullable();
+           $table->string('status')->nullable();
            $table->timestamps();
        });
     }

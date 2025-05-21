@@ -308,6 +308,15 @@ class EditPageSeeder extends Seeder
                 'section_image' => 'logo.png',
                 'section_video' => '',
             ],
+            //QRCODE
+                        [
+                'section_part' => 'reservation_part',
+                'section_sub_part' => 'qrcode_logo',
+                'section_type' => 'image',
+                'section_text' => '',
+                'section_image' => 'gcash_qrcode.png',
+                'section_video' => '',
+            ],
         ]);
     }
 }

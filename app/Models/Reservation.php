@@ -25,6 +25,8 @@ class Reservation extends Model
         'schedule',
         'pax',
         'status',
+        'time_arrival',
+        'time_departure',
         'food_order',
         'payment_method',
         'town_code',
